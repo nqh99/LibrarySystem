@@ -38,15 +38,18 @@ public class LoginService implements ILoginService
     public UserModel findUserByUsername(String username, String password)
     {
         Connection con = null;
+        UserModel user = new UserModel();
         try
         {
             con = DatabaseUtils.getConnection();
+            user = userQueryRepository.findUserByUsername(con, username, password);
+            DatabaseUtils.closeConnection(con);
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            user.setAuthen(false);
+            user.setMessage(e.getMessage());
         }
-        UserModel user = userQueryRepository.findUserByUsername(con, username, password);
 
         return user;
     }
