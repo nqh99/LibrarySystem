@@ -3,6 +3,7 @@ package main.infra;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 import database.SqlQuery;
@@ -38,7 +39,7 @@ public class BookQueryRepository implements IBookQueryRepository
     }
 
     @Override
-    public Book findBookById(Connection con, Integer id)
+    public Book findBookById(Connection con, Integer id) throws SQLException
     {
         Book book = null;
         try (PreparedStatement stmt = con.prepareStatement(SqlQuery.BOOK_BY_ID_SQL))
@@ -47,17 +48,17 @@ public class BookQueryRepository implements IBookQueryRepository
             ResultSet rs = stmt.executeQuery();
             if (rs.next())
             {
-//                bookModel = new BookModel();
-//                bookModel.setId(id);
-//                bookModel.setAuthor(rs.getString("author"));
-//                bookModel.setName(rs.getString("name"));
-//                bookModel.setCreateTime(rs.getDate("create_time"));
-//                bookModel.setUpdateTime(rs.getDate("update_time"));
+                book = new Book();
+                book.setId(id);
+                book.setName(rs.getString("name"));
+                book.setAuthor(rs.getString("author"));
+                book.setCreateTime(rs.getLong("create_time"));
+                book.setUpdateTime(rs.getLong("update_time"));
             }
         }
-        catch (Exception e)
+        catch (SQLException e)
         {
-            e.printStackTrace();
+            throw new SQLException(e.getMessage());
         }
         return book;
     }

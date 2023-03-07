@@ -1,8 +1,8 @@
 package main.view;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.GridLayout;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -10,7 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 
 import main.controller.LoginController;
 
@@ -30,7 +29,7 @@ public class LoginPage extends JFrame
 
     private final JTextField  password;
 
-    public LoginPage()
+    public LoginPage() throws SQLException
     {
         userLabel = new JLabel();
         userLabel.setText("Username");
@@ -55,19 +54,10 @@ public class LoginPage extends JFrame
 
         add(panel, BorderLayout.CENTER);
 
-//        button.addActionListener(this); // add action listener to button
         setTitle("Sign in");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(300, 100);
         setVisible(true);
         pack();
-    }
-
-    public static void main(String[] args)
-    {
-        LoginPage lp = new LoginPage();
-        Component c = lp.getComponent(0);
-        System.out.println(c.getTreeLock());
-        SwingUtilities.invokeLater(null);
     }
 }

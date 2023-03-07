@@ -1,12 +1,13 @@
 package main.infra;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
-import main.model.UserModel;
+import main.domain.User;
 
 public interface IUserQueryRepository
 {
-    UserModel findUserByUsername(Connection con, String username, String password);
+    User findUserByUsernameAndPassword(Connection con, String username, String password) throws SQLException;
     
     
 }

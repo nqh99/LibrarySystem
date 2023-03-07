@@ -3,10 +3,10 @@ package main.services;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import main.domain.User;
 import main.infra.IUserQueryRepository;
 import main.infra.UserQueryRepository;
 import main.model.UserModel;
-import main.utils.DatabaseUtils;
 
 public class LoginService implements ILoginService
 {
@@ -35,22 +35,29 @@ public class LoginService implements ILoginService
     }
 
     @Override
-    public UserModel findUserByUsername(String username, String password)
+    public UserModel findUserByUsernameAndPassword(Connection con, String username, String password)
     {
-        Connection con = null;
-        UserModel user = new UserModel();
+        UserModel userModel = new UserModel();
         try
         {
-            con = DatabaseUtils.getConnection();
-            user = userQueryRepository.findUserByUsername(con, username, password);
-            DatabaseUtils.closeConnection(con);
+            User user = userQueryRepository.findUserByUsernameAndPassword(con, username, password);
+            if (user == null)
+            {
+                userModel.setAuthen(false);
+                userModel.setMessage("Username or password is wrong. Please type in again!");
+                return userModel;
+            }
+            userModel.setUsername(user.getUsername());
+            userModel.setRule(user.getRule());
+            userModel.setAuthen(true);
+            userModel.setMessage("Login success!");
         }
         catch (SQLException e)
         {
-            user.setAuthen(false);
-            user.setMessage(e.getMessage());
+            userModel.setAuthen(false);
+            userModel.setMessage(e.getMessage());
         }
 
-        return user;
+        return userModel;
     }
 }

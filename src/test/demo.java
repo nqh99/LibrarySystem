@@ -1,45 +1,27 @@
 package test;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 
-import main.configures.ApplicationCfg;
-import main.domain.Book;
-import main.domain.ObjectType;
-import main.domain.RealObject;
 import main.model.BookModel;
+import main.services.BookService;
+import main.utils.DatabaseUtils;
 
 public class demo extends JFrame
 {
     private static final long serialVersionUID = 1L;
 
-    public demo()
+    public demo() throws SQLException
     {
-        Book b1 = new Book();
-        b1.setName("abc");
-//        b1.setCreateTime(2323223232L);
-//        b1.setId(1);
-        b1.setUpdateTime(2323223232L);
-        System.out.println(b1.toString());
-        Book b2 = new Book();
-        b2.setName("abcd");
-        Book b3 = new Book();
-        b3.setName("abcde");
+        BookService bs = BookService.getInstance();
+        Connection c = DatabaseUtils.getConnection();
 
-        List<RealObject> list = new ArrayList<>();
-        list.add(b1);
-        list.add(b2);
-        list.add(b3);
-
-        ApplicationCfg cfg = ApplicationCfg.getInstance();
-
-        BookModel model = (BookModel) cfg.getObjectMap().get(ObjectType.BOOK);
-        model.setBookList(list);
+        BookModel model = bs.findBookById(c, 1);
 
         JTable table = new JTable(model);
 
@@ -58,10 +40,18 @@ public class demo extends JFrame
             @Override
             public void run()
             {
-                new demo();
+                try
+                {
+                    new demo();
+                }
+                catch (SQLException e)
+                {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             }
         });
-        
+
         System.out.println();
     }
 
