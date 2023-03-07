@@ -9,5 +9,6 @@ public class HomePage extends JFrame
 
     public HomePage() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
     }
 }

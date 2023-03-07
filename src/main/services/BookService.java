@@ -42,7 +42,7 @@ public class BookService implements IBookService
         try
         {
             con = DatabaseUtils.getConnection();
-            bookModel = bookQueryRepository.findBookById(con, id);
+//            bookModel = bookQueryRepository.findBookById(con, id);
             DatabaseUtils.closeConnection(con);
         }
         catch (SQLException e)

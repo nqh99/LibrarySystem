@@ -1,5 +1,7 @@
 package main.domain;
 
+import main.utils.DateTimeUtils;
+
 public abstract class RealObject
 {
 
@@ -7,9 +9,9 @@ public abstract class RealObject
 
     private String  name;
 
-    private String  createTime;
+    private Long    createTime;
 
-    private String  updateTime;
+    private Long    updateTime;
 
     public Integer getId()
     {
@@ -31,22 +33,22 @@ public abstract class RealObject
         this.name = name;
     }
 
-    public String getCreateTime()
+    public Long getCreateTime()
     {
         return createTime;
     }
 
-    public void setCreateTime(String createTime)
+    public void setCreateTime(Long createTime)
     {
         this.createTime = createTime;
     }
 
-    public String getUpdateTime()
+    public Long getUpdateTime()
     {
         return updateTime;
     }
 
-    public void setUpdateTime(String updateTime)
+    public void setUpdateTime(Long updateTime)
     {
         this.updateTime = updateTime;
     }
@@ -54,7 +56,6 @@ public abstract class RealObject
     @Override
     public String toString()
     {
-        String data = this.getClass() + " : " + " id=" + id + " name=" + name + " createTime=" + createTime + " update=" + updateTime;
-        return data;
+        return this.getClass() + " : " + " id=" + id + " name=" + name + " createTime=" + DateTimeUtils.getDateTime(createTime) + " update=" + DateTimeUtils.getDateTime(updateTime);
     }
 }
