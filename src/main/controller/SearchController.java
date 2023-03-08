@@ -1,7 +1,5 @@
 package main.controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Map;
@@ -14,10 +12,34 @@ import javax.swing.table.AbstractTableModel;
 
 import main.configures.ApplicationCfg;
 import main.domain.ObjectType;
+import main.services.LoginService;
 
-public class SearchController implements ActionListener
+public class SearchController
 {
+
+    private static volatile SearchController          obj       = null;
+
     private final Map<ObjectType, AbstractTableModel> objectMap = ApplicationCfg.getInstance().getObjectMap();
+
+    private SearchController()
+    {
+
+    }
+
+    public static SearchController getInstance()
+    {
+        if (obj == null)
+        {
+            synchronized (LoginService.class)
+            {
+                if (obj == null)
+                {
+                    obj = new SearchController();
+                }
+            }
+        }
+        return obj;
+    }
 
     public class RenderSearchUI implements ItemListener
     {
@@ -53,10 +75,4 @@ public class SearchController implements ActionListener
 
     }
 
-    @Override
-    public void actionPerformed(ActionEvent arg0)
-    {
-        // TODO Auto-generated method stub
-
-    }
 }

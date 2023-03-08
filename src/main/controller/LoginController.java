@@ -11,30 +11,64 @@ import main.model.UserModel;
 import main.services.LoginService;
 import main.utils.DatabaseUtils;
 
-public class LoginController implements ActionListener
+public class LoginController
 {
 
-    private final LoginService loginService = LoginService.getInstance();
+    private static volatile LoginController obj          = null;
 
-    private final Connection   con;
+    private final LoginService              loginService = LoginService.getInstance();
 
-    private JTextField         username;
+    private Connection                      con;
 
-    private JTextField         password;
-
-    public LoginController(JTextField username, JTextField password) throws SQLException
+    private LoginController()
     {
-        super();
-        this.username = username;
-        this.password = password;
-        con = DatabaseUtils.getConnection();
+
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e)
+    public static LoginController getInstance()
     {
-        UserModel user = loginService.findUserByUsernameAndPassword(con, username.getText(), password.getText());
-        System.out.println(user.getMessage());
+        if (obj == null)
+        {
+            synchronized (LoginService.class)
+            {
+                if (obj == null)
+                {
+                    obj = new LoginController();
+                }
+            }
+        }
+        return obj;
+    }
+
+    public class AuthenUserListerner implements ActionListener
+    {
+
+        private JTextField username;
+
+        private JTextField password;
+
+        public AuthenUserListerner(JTextField username, JTextField password) throws SQLException
+        {
+            super();
+            this.username = username;
+            this.password = password;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            try
+            {
+                con = DatabaseUtils.getConnection();
+            }
+            catch (SQLException e1)
+            {
+                e1.printStackTrace();
+            }
+            UserModel user = loginService.findUserByUsernameAndPassword(con, username.getText(), password.getText());
+            System.out.println(user.getMessage());
+        }
+
     }
 
 }

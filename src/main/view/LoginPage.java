@@ -15,19 +15,21 @@ import main.controller.LoginController;
 
 public class LoginPage extends JFrame
 {
-    private static final long serialVersionUID = 1L;
+    private static final long     serialVersionUID = 1L;
 
-    private JButton           button;
+    private final LoginController loginController  = LoginController.getInstance();
 
-    private JPanel            panel;
+    private JButton               button;
 
-    private JLabel            userLabel;
+    private JPanel                panel;
 
-    private JLabel            passwordLabel;
+    private JLabel                userLabel;
 
-    private final JTextField  username;
+    private JLabel                passwordLabel;
 
-    private final JTextField  password;
+    private final JTextField      username;
+
+    private final JTextField      password;
 
     public LoginPage() throws SQLException
     {
@@ -42,8 +44,9 @@ public class LoginPage extends JFrame
         password = new JPasswordField(15);
 
         button = new JButton("Login");
-        LoginController loginController = new LoginController(username, password);
-        button.addActionListener(loginController);
+
+//        LoginController.AuthenUserListerner = 
+//        button.addActionListener();
 
         panel = new JPanel(new GridLayout(3, 1));
         panel.add(userLabel);
