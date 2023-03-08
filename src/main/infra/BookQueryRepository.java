@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import database.SqlQuery;
@@ -50,10 +51,10 @@ public class BookQueryRepository implements IBookQueryRepository
             {
                 book = new Book();
                 book.setId(id);
-                book.setName(rs.getString("name"));
-                book.setAuthor(rs.getString("author"));
-                book.setCreateTime(rs.getLong("create_time"));
-                book.setUpdateTime(rs.getLong("update_time"));
+                book.setName(rs.getString("NAME"));
+                book.setAuthor(rs.getString("AUTHOR"));
+                book.setCreateTime(rs.getLong("CREATE_TIME"));
+                book.setUpdateTime(rs.getLong("UPDATE_TIME"));
             }
         }
         catch (SQLException e)
@@ -64,15 +65,112 @@ public class BookQueryRepository implements IBookQueryRepository
     }
 
     @Override
-    public List<Book> findBookByNameOfAuthor(Connection con, String name, String author)
+    public List<Book> findBookByName(Connection con, String name) throws SQLException
     {
-        return null;
+        List<Book> list = new ArrayList<>();
+        try (PreparedStatement stmt = con.prepareStatement(SqlQuery.BOOK_BY_NAME_SQL))
+        {
+            stmt.setString(1, name);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next())
+            {
+                Book book = new Book();
+                book.setId(rs.getInt("BOOK_ID"));
+                book.setName(name);
+                book.setAuthor(rs.getString("AUTHOR"));
+                book.setCreateTime(rs.getLong("CREATE_TIME"));
+                book.setUpdateTime(rs.getLong("UPDATE_TIME"));
+
+                list.add(book);
+            }
+        }
+        catch (SQLException e)
+        {
+            throw new SQLException(e.getMessage());
+        }
+        return list;
     }
 
     @Override
-    public Book findBookByIdAndNameAndAuthor(Connection con, Integer id, String name, String author)
+    public List<Book> findBookByAuthor(Connection con, String author) throws SQLException
     {
-        return null;
+        List<Book> list = new ArrayList<>();
+        try (PreparedStatement stmt = con.prepareStatement(SqlQuery.BOOK_BY_AUTHOR_SQL))
+        {
+            stmt.setString(1, author);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next())
+            {
+                Book book = new Book();
+                book.setId(rs.getInt("BOOK_ID"));
+                book.setName(rs.getString("NAME"));
+                book.setAuthor(author);
+                book.setCreateTime(rs.getLong("CREATE_TIME"));
+                book.setUpdateTime(rs.getLong("UPDATE_TIME"));
+
+                list.add(book);
+            }
+        }
+        catch (SQLException e)
+        {
+            throw new SQLException(e.getMessage());
+        }
+        return list;
+    }
+
+    @Override
+    public List<Book> findBookByNameAndAuthor(Connection con, String name, String author) throws SQLException
+    {
+        List<Book> list = new ArrayList<>();
+        try (PreparedStatement stmt = con.prepareStatement(SqlQuery.BOOK_BY_NAME_AND_AUTHOR_SQL))
+        {
+            stmt.setString(1, name);
+            stmt.setString(2, author);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next())
+            {
+                Book book = new Book();
+                book.setId(rs.getInt("BOOK_ID"));
+                book.setName(name);
+                book.setAuthor(author);
+                book.setCreateTime(rs.getLong("CREATE_TIME"));
+                book.setUpdateTime(rs.getLong("UPDATE_TIME"));
+
+                list.add(book);
+            }
+        }
+        catch (SQLException e)
+        {
+            throw new SQLException(e.getMessage());
+        }
+        return list;
+    }
+
+    @Override
+    public Book findBookByIdAndNameAndAuthor(Connection con, Integer id, String name, String author) throws SQLException
+    {
+        Book book = null;
+        try (PreparedStatement stmt = con.prepareStatement(SqlQuery.BOOK_BY_ID_AND_NAME_AND_AUTHOR_SQL))
+        {
+            stmt.setInt(1, id);
+            stmt.setString(2, name);
+            stmt.setString(3, author);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next())
+            {
+                book = new Book();
+                book.setId(id);
+                book.setName(name);
+                book.setAuthor(author);
+                book.setCreateTime(rs.getLong("CREATE_TIME"));
+                book.setUpdateTime(rs.getLong("UPDATE_TIME"));
+            }
+        }
+        catch (SQLException e)
+        {
+            throw new SQLException(e.getMessage());
+        }
+        return book;
     }
 
 }

@@ -8,6 +8,5 @@ import main.domain.User;
 public interface IUserQueryRepository
 {
     User findUserByUsernameAndPassword(Connection con, String username, String password) throws SQLException;
-    
-    
+
 }

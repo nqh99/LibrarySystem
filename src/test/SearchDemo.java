@@ -1,35 +1,27 @@
 package test;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
 import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 
-import main.model.BookModel;
-import main.services.BookService;
 import main.services.ISearchService;
 import main.services.SearchService;
-import main.utils.DatabaseUtils;
+import main.view.components.Search;
 
-public class demo extends JFrame
+public class SearchDemo extends JFrame
 {
     private static final long serialVersionUID = 1L;
 
-    public demo() throws SQLException
+    public SearchDemo() throws SQLException
     {
-        BookService bs = BookService.getInstance();
-        Connection c = DatabaseUtils.getConnection();
+        String[] str = new String[] { "book", "library", "renter" };
 
-        BookModel model = bs.findBookById(c, 1);
+        Search search = new Search(str);
 
-        JTable table = new JTable(model);
+        this.add(search);
 
-        this.add(new JScrollPane(table));
-
-        this.setTitle("Editable Table Example");
+        this.setTitle("Search");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
         this.setVisible(true);
@@ -44,7 +36,7 @@ public class demo extends JFrame
             {
                 try
                 {
-                    new demo();
+                    new SearchDemo();
                 }
                 catch (SQLException e)
                 {
@@ -59,5 +51,3 @@ public class demo extends JFrame
     }
 
 }
-
-
