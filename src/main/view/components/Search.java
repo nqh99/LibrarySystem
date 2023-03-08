@@ -1,7 +1,7 @@
 package main.view.components;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -9,44 +9,38 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class Search extends JPanel
-{
-    private static final long        serialVersionUID = 1L;
+import main.controller.SearchController;
 
-    private JComboBox<String>        searchObjects;
+public class Search extends JPanel {
+	private static final long serialVersionUID = 1L;
 
-    private final GridBagLayout      gridBag          = new GridBagLayout();
+	public Search(String[] columnNames) {
+		this.setLayout(new BorderLayout());
 
-    private final GridBagConstraints gbc              = new GridBagConstraints();
+		// Selecting table section
+		JPanel selectionPanel = new JPanel(new FlowLayout());
+		selectionPanel.add(new JLabel("Object name: "));
 
-    public Search(String[] columnNames)
-    {
-        // Define GridBagLayout
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		JComboBox<String> tablesComboBox = new JComboBox<>(columnNames);
+		tablesComboBox.setSize(70, 25);
+		tablesComboBox.setSelectedIndex(-1);
 
-//        gbc.insets = new Insets(5, 5, 5, 5);
-//        gbc.fill = GridBagConstraints.BOTH;
-//        gbc.weightx = 1.0;
+		selectionPanel.add(tablesComboBox);
 
-        // Selecting table section
-        add(new JLabel("Object name: "));
+		this.add(selectionPanel, BorderLayout.NORTH);
 
-        searchObjects = new JComboBox<>(columnNames);
-        searchObjects.setSize(70, 20);
-//        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        add(searchObjects);
+		JPanel contentPanel = new JPanel();
+		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 
-//        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        JPanel dynamicPanel = new JPanel(gridBag);
-        BoxLayout boxlayout = new BoxLayout(dynamicPanel, BoxLayout.Y_AXIS);
-        dynamicPanel.setLayout(boxlayout);
-//        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        this.add(dynamicPanel);
-//        SearchController.RenderSearchUI sc = new SearchController.RenderSearchUI(dynamicPanel, searchObjects);
-//        searchObjects.addItemListener(sc);
+		this.add(contentPanel, BorderLayout.CENTER);
+		SearchController.RenderSearchUI sc = new SearchController.RenderSearchUI(contentPanel, tablesComboBox);
+		tablesComboBox.addItemListener(sc);
 
-//        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        add(new JButton("Submit"));
+		JPanel southPanel = new JPanel();
+		JButton searchBtn = new JButton("Search");
+		searchBtn.setSize(100, 50);
+		southPanel.add(searchBtn);
 
-    }
+		this.add(southPanel, BorderLayout.SOUTH);
+	}
 }
