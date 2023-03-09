@@ -19,9 +19,9 @@ public class RenterModel extends AbstractTableModel
     @SuppressWarnings("rawtypes")
     private final Class[]     columnClass      = new Class[] { Integer.class, String.class, String.class, String.class, Date.class, Date.class };
 
-    public RenterModel()
+    public RenterModel(List<RealObject> renterList)
     {
-
+        this.renterList = renterList;
     }
 
     @Override
@@ -94,9 +94,6 @@ public class RenterModel extends AbstractTableModel
 
     public void setRenterList(List<RealObject> renterList)
     {
-        if (renterList.size() != 0 && renterList.get(0).getClass() == Renter.class)
-        {
-            this.renterList = renterList;
-        }
+        this.renterList = renterList;
     }
 }

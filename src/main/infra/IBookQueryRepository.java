@@ -18,4 +18,6 @@ public interface IBookQueryRepository
     public List<Book> findBookByNameAndAuthor(Connection con, String name, String author) throws SQLException;
 
     public Book findBookByIdAndNameAndAuthor(Connection con, Integer id, String name, String author) throws SQLException;
+
+    public int removeBookById(Connection con, Integer id) throws SQLException;
 }

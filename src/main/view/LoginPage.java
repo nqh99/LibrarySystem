@@ -1,7 +1,10 @@
 package main.view;
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
@@ -11,56 +14,77 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import main.controller.LoginController;
+import main.configures.ApplicationCfg;
+import main.model.UserModel;
+import main.services.ILoginService;
+import main.services.LoginService;
+import main.utils.DatabaseUtils;
 
 public class LoginPage extends JFrame
 {
-    private static final long     serialVersionUID = 1L;
+    private static final long    serialVersionUID = 1L;
 
-    private final LoginController loginController  = LoginController.getInstance();
+    private final ApplicationCfg applicationCfg   = ApplicationCfg.getInstance();
 
-    private JButton               button;
+    private Connection           con;
 
-    private JPanel                panel;
+    private final ILoginService  loginService     = LoginService.getInstance();
 
-    private JLabel                userLabel;
+    private JTextField           username;
 
-    private JLabel                passwordLabel;
-
-    private final JTextField      username;
-
-    private final JTextField      password;
+    private JPasswordField       password;
 
     public LoginPage() throws SQLException
     {
-        userLabel = new JLabel();
-        userLabel.setText("Username");
+        this.setLayout(new BorderLayout());
 
+        JPanel contentPanel = new JPanel();
+
+        JPanel userPanel = new JPanel(new FlowLayout());
+        userPanel.add(new JLabel("Username: "));
         username = new JTextField(15);
+        userPanel.add(username);
 
-        passwordLabel = new JLabel();
-        passwordLabel.setText("Password");
-
+        JPanel passwordPanel = new JPanel(new FlowLayout());
+        userPanel.add(new JLabel("Password: "));
         password = new JPasswordField(15);
+        userPanel.add(password);
 
-        button = new JButton("Login");
+        JButton button = new JButton("Login");
+        button.addActionListener(new ActionListener()
+        {
 
-//        LoginController.AuthenUserListerner = 
-//        button.addActionListener();
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                try
+                {
+                    con = DatabaseUtils.getConnection();
+                    UserModel user = loginService.findUserByUsernameAndPassword(con, username.getText(), new String(password.getPassword()));
+                    if (user.isAuthen())
+                    {
+                        applicationCfg.setUser(user);
+                        new HomePage();
+                    }
+                }
+                catch (SQLException e1)
+                {
+                    e1.printStackTrace();
+                }
 
-        panel = new JPanel(new GridLayout(3, 1));
-        panel.add(userLabel);
-        panel.add(username);
-        panel.add(passwordLabel);
-        panel.add(password);
-        panel.add(button);
+            }
+        });
 
-        add(panel, BorderLayout.CENTER);
+        contentPanel.add(userPanel);
+        contentPanel.add(passwordPanel);
+        contentPanel.add(button);
 
-        setTitle("Sign in");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(300, 100);
-        setVisible(true);
-        pack();
+        this.add(contentPanel, BorderLayout.CENTER);
+
+        this.setTitle("Sign in");
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setSize(300, 100);
+        this.setVisible(true);
+        this.pack();
     }
 }

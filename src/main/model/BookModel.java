@@ -19,9 +19,9 @@ public class BookModel extends AbstractTableModel
     @SuppressWarnings("rawtypes")
     private final Class[]     columnClass      = new Class[] { Integer.class, String.class, String.class, Date.class, Date.class };
 
-    public BookModel()
+    public BookModel(List<RealObject> bookList)
     {
-
+        this.bookList = bookList;
     }
 
     @Override
@@ -83,17 +83,14 @@ public class BookModel extends AbstractTableModel
         return obj;
     }
 
-    public void setBookList(List<RealObject> bookList)
-    {
-        if (bookList.size() != 0 && bookList.get(0).getClass() == Book.class)
-        {
-            this.bookList = bookList;
-        }
-    }
-
     public List<RealObject> getBookList()
     {
         return bookList;
+    }
+
+    public void setBookList(List<RealObject> bookList)
+    {
+        this.bookList = bookList;
     }
 
 }

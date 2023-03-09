@@ -19,7 +19,7 @@ public class TestDatabase
         try
         {
             con = DatabaseUtils.getConnection();
-            BookModel model = searchService.findBookById(con, 1);
+            BookModel model = searchService.findBookByIdAndNameAndAuthor(con, 1, "Con duong A", "Cao Ba A");
 
             System.out.println(model.getBookList());
         }

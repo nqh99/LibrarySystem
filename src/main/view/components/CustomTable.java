@@ -5,7 +5,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
-public class CustomTable<T> extends JPanel
+public class CustomTable extends JPanel
 {
 
     private static final long serialVersionUID = 1L;

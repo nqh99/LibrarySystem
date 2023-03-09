@@ -173,4 +173,20 @@ public class BookQueryRepository implements IBookQueryRepository
         return book;
     }
 
+    @Override
+    public int removeBookById(Connection con, Integer id) throws SQLException
+    {
+        int rowNum = 0;
+        try (PreparedStatement stmt = con.prepareStatement(SqlQuery.DELETE_BOOK_BY_ID))
+        {
+            stmt.setInt(1, id);
+            rowNum = stmt.executeUpdate();
+        }
+        catch (SQLException e)
+        {
+            throw new SQLException(e.getMessage());
+        }
+        return rowNum;
+    }
+
 }

@@ -35,10 +35,16 @@ public final class SqlQuery
     public static final String RENTER_BY_NAME_AND_EMAIL_SQL                         = "SELECT * FROM RENTERS r WHERE NAME =? AND EMAIL =?";
 
     public static final String RENTER_BY_NAME_AND_PHONE_NUMBER_SQL                  = "SELECT * FROM RENTERS r WHERE NAME =? AND PHONE_NUMBER =?";
-    
-    public static final String RENTER_BY_EMAIL_AND_PHONE_NUMBER_SQL                  = "SELECT * FROM RENTERS r WHERE EMAIL =? AND PHONE_NUMBER =?";
+
+    public static final String RENTER_BY_EMAIL_AND_PHONE_NUMBER_SQL                 = "SELECT * FROM RENTERS r WHERE EMAIL =? AND PHONE_NUMBER =?";
 
     public static final String RENTER_BY_NAME_AND_EMAIL_AND_PHONE_NUMBER_SQL        = "SELECT * FROM RENTERS r WHERE NAME =? AND EMAIL =? AND PHONE_NUMBER =?";
 
     public static final String RENTER_BY_ID_AND_NAME_AND_EMAIL_AND_PHONE_NUMBER_SQL = "SELECT * FROM RENTERS r WHERE RENTER_ID =? AND NAME =? AND EMAIL =? AND PHONE_NUMBER =?";
+
+    public static final String DELETE_BOOK_BY_ID                                    = "DELETE FROM BOOKS WHERE BOOK_ID =?";
+
+    public static final String DELETE_LIBRARY_BY_ID                                 = "DELETE FROM LIBRARY WHERE LIBRARY_ID =?";
+
+    public static final String DELETE_RENTER_BY_ID                                  = "DELETE FROM RENTERS WHERE RENTER_ID =?";
 }

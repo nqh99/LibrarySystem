@@ -19,9 +19,9 @@ public class LibraryModel extends AbstractTableModel
     @SuppressWarnings("rawtypes")
     private final Class[]     columnClass      = new Class[] { Integer.class, String.class, String.class, Date.class, Date.class };
 
-    public LibraryModel()
+    public LibraryModel(List<RealObject> libraryList)
     {
-
+        this.libraryList = libraryList;
     }
 
     @Override
@@ -90,10 +90,7 @@ public class LibraryModel extends AbstractTableModel
 
     public void setLibraryList(List<RealObject> libraryList)
     {
-        if (libraryList.size() != 0 && libraryList.get(0).getClass() == Library.class)
-        {
-            this.libraryList = libraryList;
-        }
+        this.libraryList = libraryList;
     }
 
 }

@@ -4,8 +4,11 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import main.model.BookModel;
@@ -37,27 +40,16 @@ public class demo extends JFrame
 
     public static void main(String[] args)
     {
-        SwingUtilities.invokeLater(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                try
-                {
-                    new demo();
-                }
-                catch (SQLException e)
-                {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-        });
+        JPanel panel = new JPanel();
 
-        ISearchService sear = SearchService.getInstance();
-        System.out.println(sear.getClass());
+        panel.add(new JTextField("ABc"));
+        panel.add(new JLabel("ABc"));
+
+        panel.add(new JTextField("ABc"));
+
+        panel.add(new JTextField("ABc"));
+
+        System.out.println(panel.getComponentCount());
     }
 
 }
-
-
