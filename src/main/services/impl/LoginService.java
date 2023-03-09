@@ -1,4 +1,4 @@
-package main.services;
+package main.services.impl;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -7,6 +7,7 @@ import main.domain.User;
 import main.infra.IUserQueryRepository;
 import main.infra.UserQueryRepository;
 import main.model.UserModel;
+import main.services.ILoginService;
 
 public class LoginService implements ILoginService
 {

@@ -1,4 +1,4 @@
-package main.services;
+package main.services.impl;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -16,6 +16,7 @@ import main.domain.RealObject;
 import main.infra.BookQueryRepository;
 import main.infra.IBookQueryRepository;
 import main.model.BookModel;
+import main.services.IBookService;
 
 public class BookService implements IBookService
 {

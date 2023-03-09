@@ -12,9 +12,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import main.model.BookModel;
-import main.services.BookService;
 import main.services.ISearchService;
-import main.services.SearchService;
+import main.services.impl.BookService;
+import main.services.impl.SearchService;
 import main.utils.DatabaseUtils;
 
 public class demo extends JFrame

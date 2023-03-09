@@ -27,10 +27,10 @@ import javax.swing.table.AbstractTableModel;
 
 import main.configures.ApplicationCfg;
 import main.domain.ObjectType;
-import main.services.BookService;
 import main.services.IBookService;
 import main.services.ISearchService;
-import main.services.SearchService;
+import main.services.impl.BookService;
+import main.services.impl.SearchService;
 import main.utils.DatabaseUtils;
 
 public class HomePage extends JFrame

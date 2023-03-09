@@ -13,8 +13,8 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 import main.domain.ObjectType;
-import main.services.BookService;
 import main.services.IBookService;
+import main.services.impl.BookService;
 import main.utils.DatabaseUtils;
 
 public class DeleteForm extends JFrame
@@ -68,6 +68,7 @@ public class DeleteForm extends JFrame
         });
 
         this.setVisible(true);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setPreferredSize(new Dimension(200, 100));
         this.pack();
     }

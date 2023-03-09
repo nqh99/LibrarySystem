@@ -17,7 +17,7 @@ import javax.swing.JTextField;
 import main.configures.ApplicationCfg;
 import main.model.UserModel;
 import main.services.ILoginService;
-import main.services.LoginService;
+import main.services.impl.LoginService;
 import main.utils.DatabaseUtils;
 
 public class LoginPage extends JFrame
@@ -65,6 +65,8 @@ public class LoginPage extends JFrame
                     {
                         applicationCfg.setUser(user);
                         new HomePage();
+                        System.out.println(this);
+                        closeFrame();
                     }
                 }
                 catch (SQLException e1)
@@ -82,9 +84,14 @@ public class LoginPage extends JFrame
         this.add(contentPanel, BorderLayout.CENTER);
 
         this.setTitle("Sign in");
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(300, 100);
         this.setVisible(true);
         this.pack();
+    }
+
+    private void closeFrame()
+    {
+        this.dispose();
     }
 }

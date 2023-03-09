@@ -1,4 +1,4 @@
-package main.services;
+package main.services.impl;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -24,6 +24,7 @@ import main.infra.RenterQueryRepository;
 import main.model.BookModel;
 import main.model.LibraryModel;
 import main.model.RenterModel;
+import main.services.ISearchService;
 
 public class SearchService implements ISearchService
 {

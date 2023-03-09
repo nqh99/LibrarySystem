@@ -18,8 +18,8 @@ import javax.swing.table.AbstractTableModel;
 import main.configures.ApplicationCfg;
 import main.domain.ObjectType;
 import main.services.ISearchService;
-import main.services.LoginService;
-import main.services.SearchService;
+import main.services.impl.LoginService;
+import main.services.impl.SearchService;
 import main.utils.DatabaseUtils;
 
 public class SearchController

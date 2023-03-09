@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import main.model.BookModel;
 import main.services.ISearchService;
-import main.services.SearchService;
+import main.services.impl.SearchService;
 import main.utils.DatabaseUtils;
 
 public class TestDatabase
