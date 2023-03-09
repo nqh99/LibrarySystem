@@ -1,4 +1,4 @@
-package main.infra;
+package main.infra.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 import database.SqlQuery;
 import main.domain.User;
+import main.infra.IUserQueryRepository;
 
 /**
  * Singleton

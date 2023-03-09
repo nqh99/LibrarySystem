@@ -1,4 +1,4 @@
-package main.infra;
+package main.infra.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,6 +9,7 @@ import java.util.List;
 
 import database.SqlQuery;
 import main.domain.Book;
+import main.infra.IBookQueryRepository;
 
 /**
  * Singleton

@@ -65,7 +65,6 @@ public class LoginPage extends JFrame
                     {
                         applicationCfg.setUser(user);
                         new HomePage();
-                        System.out.println(this);
                         closeFrame();
                     }
                 }
@@ -84,7 +83,7 @@ public class LoginPage extends JFrame
         this.add(contentPanel, BorderLayout.CENTER);
 
         this.setTitle("Sign in");
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(300, 100);
         this.setVisible(true);
         this.pack();

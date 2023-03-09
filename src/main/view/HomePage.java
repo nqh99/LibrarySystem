@@ -28,9 +28,7 @@ import javax.swing.table.AbstractTableModel;
 import main.configures.ApplicationCfg;
 import main.domain.ObjectType;
 import main.services.IBookService;
-import main.services.ISearchService;
 import main.services.impl.BookService;
-import main.services.impl.SearchService;
 import main.utils.DatabaseUtils;
 
 public class HomePage extends JFrame
@@ -41,8 +39,6 @@ public class HomePage extends JFrame
     private Connection                                       con;
 
     private ApplicationCfg                                   applicationCfg   = ApplicationCfg.getInstance();
-
-    private ISearchService                                   searchService    = SearchService.getInstance();
 
     private IBookService                                     bookService      = BookService.getInstance();
 
@@ -62,9 +58,13 @@ public class HomePage extends JFrame
 
     private JPanel                                           contentPanel;
 
+    private JPanel                                           tailPanel;
+
     private JButton                                          deleteBtn;
 
     private JButton                                          updateBtn;
+
+    private boolean                                          isSelect         = false;
 
     public HomePage()
     {
@@ -92,6 +92,7 @@ public class HomePage extends JFrame
             {
                 if (e.getSource() == tablesComboBox)
                 {
+                    isSelect = true;
                     tableModel = objectMap.get(ObjectType.fromValue(String.valueOf(tablesComboBox.getSelectedItem())));
                     if (searchFields != null)
                     {
@@ -131,7 +132,7 @@ public class HomePage extends JFrame
                             }
                         }
 
-                        tableModel = searchService.findBookByIdAndNameAndAuthor(con, Integer.parseInt(userInputs.get(0).getText()), userInputs.get(1).getText(), userInputs.get(2).getText());
+                        tableModel = bookService.findBookByIdAndNameAndAuthor(con, Integer.parseInt(userInputs.get(0).getText()), userInputs.get(1).getText(), userInputs.get(2).getText());
 
                         contentTable = new JTable(tableModel);
                         contentPanel.add(new JScrollPane(contentTable), BorderLayout.CENTER);
@@ -156,15 +157,23 @@ public class HomePage extends JFrame
 
         if ("admin".equals(applicationCfg.getUser().getRule()))
         {
-            JPanel tailPanel = new JPanel(new FlowLayout());
+            tailPanel = new JPanel(new FlowLayout());
             deleteBtn = new JButton("Delete");
+
             deleteBtn.addActionListener(new ActionListener()
             {
 
                 @Override
                 public void actionPerformed(ActionEvent e)
                 {
-                    new DeleteForm(tablesComboBox);
+                    if (isSelect)
+                    {
+                        new DeleteForm(tablesComboBox);
+                    }
+                    else
+                    {
+                        System.out.println("You aren't not select search field. Please check this!");
+                    }
                 }
             });
             deleteBtn.setSize(new Dimension(70, 40));
@@ -175,8 +184,9 @@ public class HomePage extends JFrame
             tailPanel.add(deleteBtn);
             tailPanel.add(updateBtn);
 
-            this.add(tailPanel, BorderLayout.SOUTH);
         }
+
+        this.add(tailPanel, BorderLayout.SOUTH);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);

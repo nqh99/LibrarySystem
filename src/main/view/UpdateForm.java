@@ -17,7 +17,7 @@ import main.services.IBookService;
 import main.services.impl.BookService;
 import main.utils.DatabaseUtils;
 
-public class DeleteForm extends JFrame
+public class UpdateForm extends JFrame
 {
 
     private static final long serialVersionUID = 1L;
@@ -32,7 +32,7 @@ public class DeleteForm extends JFrame
 
     private JButton           deleteBtn;
 
-    public DeleteForm(JComboBox<String> tablesComboBox)
+    public UpdateForm(JComboBox<String> tablesComboBox)
     {
         this.tablesComboBox = tablesComboBox;
 
@@ -54,18 +54,6 @@ public class DeleteForm extends JFrame
                 {
                     con = DatabaseUtils.getConnection();
                     if (ObjectType.BOOK.getValue().equals(tablesComboBox.getSelectedItem()))
-                    {
-                        int num = bookService.removeBookById(con, Integer.parseInt(id.getText()));
-                        System.out.println(num);
-                    }
-
-                    if (ObjectType.LIBRARY.getValue().equals(tablesComboBox.getSelectedItem()))
-                    {
-                        int num = bookService.removeBookById(con, Integer.parseInt(id.getText()));
-                        System.out.println(num);
-                    }
-
-                    if (ObjectType.RENTER.getValue().equals(tablesComboBox.getSelectedItem()))
                     {
                         int num = bookService.removeBookById(con, Integer.parseInt(id.getText()));
                         System.out.println(num);

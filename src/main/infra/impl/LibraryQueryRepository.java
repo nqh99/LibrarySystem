@@ -1,4 +1,4 @@
-package main.infra;
+package main.infra.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,6 +9,7 @@ import java.util.List;
 
 import database.SqlQuery;
 import main.domain.Library;
+import main.infra.ILibraryQueryRepository;
 
 /**
  * Singleton
@@ -85,7 +86,7 @@ public class LibraryQueryRepository implements ILibraryQueryRepository
             }
         }
         catch (Exception e)
-        {// TODO Auto-generated method stub
+        {
             throw new SQLException(e.getMessage());
         }
         return list;

@@ -47,4 +47,10 @@ public final class SqlQuery
     public static final String DELETE_LIBRARY_BY_ID                                 = "DELETE FROM LIBRARY WHERE LIBRARY_ID =?";
 
     public static final String DELETE_RENTER_BY_ID                                  = "DELETE FROM RENTERS WHERE RENTER_ID =?";
+
+    public static final String UPDATE_BOOK_BY_ID                                    = "UPDATE BOOKS SET NAME =?, AUTHOR =? WHERE BOOK_ID =?";
+
+    public static final String UPDATE_LIBRARY_BY_ID                                 = "UPDATE LIBRARY SET NAME =?, LOCATION =? WHERE LIBRARY_ID =?";
+
+    public static final String UPDATE_RENTER_BY_ID                                  = "UPDATE RENTER SET NAME =?, EMAIL=?, PHONE_NUMBER =? WHERE RENTER_ID =?";
 }

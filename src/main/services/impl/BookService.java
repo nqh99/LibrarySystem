@@ -13,8 +13,8 @@ import main.configures.ApplicationCfg;
 import main.domain.Book;
 import main.domain.ObjectType;
 import main.domain.RealObject;
-import main.infra.BookQueryRepository;
 import main.infra.IBookQueryRepository;
+import main.infra.impl.BookQueryRepository;
 import main.model.BookModel;
 import main.services.IBookService;
 
