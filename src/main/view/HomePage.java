@@ -25,6 +25,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 
+import app.UserRole;
 import main.configures.ApplicationCfg;
 import main.domain.ObjectType;
 import main.services.IBookService;
@@ -156,9 +157,9 @@ public class HomePage extends JFrame
 
         this.add(contentPanel, BorderLayout.CENTER);
 
-        if ("admin".equals(applicationCfg.getUser().getRule()))
+        tailPanel = new JPanel(new FlowLayout());
+        if (UserRole.ADMIN.getValue().equals(applicationCfg.getUser().getRule()))
         {
-            tailPanel = new JPanel(new FlowLayout());
             deleteBtn = new JButton("Delete");
 
             deleteBtn.addActionListener(new ActionListener()

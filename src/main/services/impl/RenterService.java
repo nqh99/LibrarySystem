@@ -57,7 +57,7 @@ public class RenterService implements IRenterService
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return renterModel;
     }
@@ -74,7 +74,7 @@ public class RenterService implements IRenterService
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return renterModel;
     }
@@ -90,7 +90,7 @@ public class RenterService implements IRenterService
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return renterModel;
     }
@@ -106,7 +106,7 @@ public class RenterService implements IRenterService
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return renterModel;
     }
@@ -122,7 +122,7 @@ public class RenterService implements IRenterService
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return renterModel;
     }
@@ -138,7 +138,7 @@ public class RenterService implements IRenterService
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return renterModel;
     }
@@ -154,7 +154,7 @@ public class RenterService implements IRenterService
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return renterModel;
     }
@@ -170,7 +170,7 @@ public class RenterService implements IRenterService
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return renterModel;
     }
@@ -186,7 +186,7 @@ public class RenterService implements IRenterService
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return renterModel;
     }

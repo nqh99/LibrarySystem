@@ -14,6 +14,15 @@ import main.model.LibraryModel;
 import main.model.RenterModel;
 import main.model.UserModel;
 
+/**
+ * Hold application configures for running process of application
+ * userRole
+ * tableModel
+ * tableName
+ * 
+ * @author ttl
+ *
+ */
 public final class ApplicationCfg
 {
 

@@ -1,5 +1,15 @@
 package main.configures;
 
+/**
+ * Contain database configures for connection;
+ * username
+ * password
+ * connectionURL
+ * driver
+ * 
+ * @author ttl
+ *
+ */
 public final class DatabaseCfg
 {
 

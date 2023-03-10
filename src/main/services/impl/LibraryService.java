@@ -58,7 +58,7 @@ public class LibraryService implements ILibraryService
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return libraryModel;
     }
@@ -75,7 +75,7 @@ public class LibraryService implements ILibraryService
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return libraryModel;
     }
@@ -91,7 +91,7 @@ public class LibraryService implements ILibraryService
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return libraryModel;
     }
@@ -107,7 +107,7 @@ public class LibraryService implements ILibraryService
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return libraryModel;
     }
@@ -123,7 +123,7 @@ public class LibraryService implements ILibraryService
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return libraryModel;
     }

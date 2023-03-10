@@ -6,6 +6,7 @@ import main.view.LoginPage;
 
 /**
  * Run application
+ * Using some technology stacks like: JDBC, db2, java swing
  * 
  * @author ttl
  *
