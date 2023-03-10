@@ -2,19 +2,15 @@ package test;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 
 import main.model.BookModel;
-import main.services.ISearchService;
 import main.services.impl.BookService;
-import main.services.impl.SearchService;
 import main.utils.DatabaseUtils;
 
 public class demo extends JFrame
@@ -40,16 +36,14 @@ public class demo extends JFrame
 
     public static void main(String[] args)
     {
-        JPanel panel = new JPanel();
-
-        panel.add(new JTextField("ABc"));
-        panel.add(new JLabel("ABc"));
-
-        panel.add(new JTextField("ABc"));
-
-        panel.add(new JTextField("ABc"));
-
-        System.out.println(panel.getComponentCount());
+        List<String> strlist = new ArrayList<String>();
+        strlist.add("sdfs1");
+        strlist.add("sdfs2");
+        String[] strarray = strlist.toArray(new String[0]);
+        for (int i = 0; i < strarray.length; i++)
+        {
+            System.out.println(strarray[i]);
+        }
     }
 
 }

@@ -7,6 +7,6 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="resources"/>
-	<classpathentry kind="lib" path="/home/nqh/.m2/jcc-11.5.6.0.jar"/>
+	<classpathentry kind="lib" path="/home/ttl/.m2/repository/db2/jcc-11.5.6.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

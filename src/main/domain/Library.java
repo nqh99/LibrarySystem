@@ -2,6 +2,8 @@ package main.domain;
 
 import java.util.List;
 
+import main.utils.DateTimeUtils;
+
 /**
  * 
  * @author ttl
@@ -43,6 +45,12 @@ public class Library extends RealObject
     public void setRenters(List<Renter> renters)
     {
         this.renters = renters;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Library: " + " id=" + this.getId() + " name=" + this.getName() + " location=" + this.getLocation() + " createTime=" + DateTimeUtils.getDateTime(this.getCreateTime()) + " update=" + DateTimeUtils.getDateTime(this.getUpdateTime());
     }
 
 }

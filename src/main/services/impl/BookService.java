@@ -57,7 +57,7 @@ public class BookService implements IBookService
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return bookModel;
     }
@@ -74,7 +74,7 @@ public class BookService implements IBookService
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return bookModel;
     }
@@ -91,7 +91,7 @@ public class BookService implements IBookService
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return bookModel;
     }
@@ -108,7 +108,7 @@ public class BookService implements IBookService
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return bookModel;
     }
@@ -124,7 +124,7 @@ public class BookService implements IBookService
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return bookModel;
     }
@@ -139,7 +139,40 @@ public class BookService implements IBookService
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+        return result;
+    }
+
+    @Override
+    public BookModel findAllBook(Connection con)
+    {
+        BookModel bookModel = (BookModel) objectMap.get(ObjectType.BOOK);
+        List<RealObject> list = new ArrayList<>();
+        try
+        {
+
+            list.addAll(bookQueryRepository.findAllBook(con));
+            bookModel.setBookList(list);
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e.getMessage());
+        }
+        return bookModel;
+    }
+
+    @Override
+    public int updateBookById(Connection con, Integer id, String name, String author)
+    {
+        int result = 0;
+        try
+        {
+            result = bookQueryRepository.updateBookById(con, id, name, author);
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e.getMessage());
         }
         return result;
     }

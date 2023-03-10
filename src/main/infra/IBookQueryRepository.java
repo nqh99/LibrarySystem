@@ -9,6 +9,8 @@ import main.domain.Book;
 public interface IBookQueryRepository
 {
 
+    public List<Book> findAllBook(Connection con) throws SQLException;
+
     public Book findBookById(Connection con, Integer id) throws SQLException;
 
     public List<Book> findBookByName(Connection con, String name) throws SQLException;
@@ -20,4 +22,6 @@ public interface IBookQueryRepository
     public Book findBookByIdAndNameAndAuthor(Connection con, Integer id, String name, String author) throws SQLException;
 
     public int removeBookById(Connection con, Integer id) throws SQLException;
+
+    public int updateBookById(Connection con, Integer id, String name, String author) throws SQLException;
 }

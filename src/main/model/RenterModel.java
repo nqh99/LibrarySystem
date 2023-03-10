@@ -92,8 +92,21 @@ public class RenterModel extends AbstractTableModel
         return renterList;
     }
 
-    public void setRenterList(List<RealObject> renterList)
+    public boolean setRenterList(List<RealObject> renterList)
     {
-        this.renterList = renterList;
+        boolean result = false;
+
+        if (renterList == null || renterList.size() == 0)
+        {
+            return false;
+        }
+
+        if (Renter.class.equals(renterList.get(0).getClass()))
+        {
+            this.renterList = renterList;
+            result = true;
+        }
+
+        return result;
     }
 }

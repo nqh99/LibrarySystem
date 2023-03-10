@@ -88,9 +88,22 @@ public class BookModel extends AbstractTableModel
         return bookList;
     }
 
-    public void setBookList(List<RealObject> bookList)
+    public boolean setBookList(List<RealObject> bookList)
     {
-        this.bookList = bookList;
+        boolean result = false;
+
+        if (bookList == null || bookList.size() == 0)
+        {
+            return false;
+        }
+
+        if (Book.class.equals(bookList.get(0).getClass()))
+        {
+            this.bookList = bookList;
+            result = true;
+        }
+
+        return result;
     }
 
 }

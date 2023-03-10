@@ -34,37 +34,37 @@ import main.utils.DatabaseUtils;
 public class HomePage extends JFrame
 {
 
-    private static final long                                serialVersionUID = 1L;
+    private static final long                         serialVersionUID = 1L;
 
-    private Connection                                       con;
+    private Connection                                con;
 
-    private ApplicationCfg                                   applicationCfg   = ApplicationCfg.getInstance();
+    private ApplicationCfg                            applicationCfg   = ApplicationCfg.getInstance();
 
-    private IBookService                                     bookService      = BookService.getInstance();
+    private IBookService                              bookService      = BookService.getInstance();
 
-    private final String[]                                   tableNames       = ApplicationCfg.getInstance().getTableNames();
+    private final String[]                            tableNames       = ApplicationCfg.getInstance().getTableNames();
 
-    private static final Map<ObjectType, AbstractTableModel> objectMap        = ApplicationCfg.getInstance().getObjectMap();
+    private final Map<ObjectType, AbstractTableModel> objectMap        = ApplicationCfg.getInstance().getObjectMap();
 
-    private JComboBox<String>                                tablesComboBox;
+    private JComboBox<String>                         tablesComboBox;
 
-    private JPanel                                           searchFields;
+    private JPanel                                    searchFields;
 
-    private JButton                                          searchBtn;
+    private JButton                                   searchBtn;
 
-    private AbstractTableModel                               tableModel;
+    private AbstractTableModel                        tableModel;
 
-    private JTable                                           contentTable;
+    private JTable                                    contentTable;
 
-    private JPanel                                           contentPanel;
+    private JPanel                                    contentPanel;
 
-    private JPanel                                           tailPanel;
+    private JPanel                                    tailPanel;
 
-    private JButton                                          deleteBtn;
+    private JButton                                   deleteBtn;
 
-    private JButton                                          updateBtn;
+    private JButton                                   updateBtn;
 
-    private boolean                                          isSelect         = false;
+    private boolean                                   isSelect         = false;
 
     public HomePage()
     {
@@ -93,7 +93,8 @@ public class HomePage extends JFrame
                 if (e.getSource() == tablesComboBox)
                 {
                     isSelect = true;
-                    tableModel = objectMap.get(ObjectType.fromValue(String.valueOf(tablesComboBox.getSelectedItem())));
+                    String seletedItem = String.valueOf(tablesComboBox.getSelectedItem());
+                    tableModel = objectMap.get(ObjectType.fromValue(seletedItem));
                     if (searchFields != null)
                     {
                         searchFields.removeAll();
@@ -180,6 +181,22 @@ public class HomePage extends JFrame
 
             updateBtn = new JButton("Update");
             updateBtn.setSize(new Dimension(70, 40));
+            updateBtn.addActionListener(new ActionListener()
+            {
+
+                @Override
+                public void actionPerformed(ActionEvent e)
+                {
+                    if (isSelect)
+                    {
+                        new UpdateForm(tablesComboBox);
+                    }
+                    else
+                    {
+                        System.out.println("You aren't not select search field. Please check this!");
+                    }
+                }
+            });
 
             tailPanel.add(deleteBtn);
             tailPanel.add(updateBtn);

@@ -1,7 +1,5 @@
 package main.domain;
 
-import main.utils.DateTimeUtils;
-
 public abstract class RealObject
 {
 
@@ -53,9 +51,5 @@ public abstract class RealObject
         this.updateTime = updateTime;
     }
 
-    @Override
-    public String toString()
-    {
-        return this.getClass() + " : " + " id=" + id + " name=" + name + " createTime=" + DateTimeUtils.getDateTime(createTime) + " update=" + DateTimeUtils.getDateTime(updateTime);
-    }
+    public abstract String toString();
 }

@@ -88,9 +88,22 @@ public class LibraryModel extends AbstractTableModel
         return libraryList;
     }
 
-    public void setLibraryList(List<RealObject> libraryList)
+    public boolean setLibraryList(List<RealObject> libraryList)
     {
-        this.libraryList = libraryList;
+        boolean result = false;
+
+        if (libraryList == null || libraryList.size() == 0)
+        {
+            return false;
+        }
+
+        if (Library.class.equals(libraryList.get(0).getClass()))
+        {
+            this.libraryList = libraryList;
+            result = true;
+        }
+
+        return result;
     }
 
 }

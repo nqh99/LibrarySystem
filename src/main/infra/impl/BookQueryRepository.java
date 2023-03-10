@@ -73,7 +73,7 @@ public class BookQueryRepository implements IBookQueryRepository
         {
             stmt.setString(1, name);
             ResultSet rs = stmt.executeQuery();
-            if (rs.next())
+            while (rs.next())
             {
                 Book book = new Book();
                 book.setId(rs.getInt("BOOK_ID"));
@@ -100,7 +100,7 @@ public class BookQueryRepository implements IBookQueryRepository
         {
             stmt.setString(1, author);
             ResultSet rs = stmt.executeQuery();
-            if (rs.next())
+            while (rs.next())
             {
                 Book book = new Book();
                 book.setId(rs.getInt("BOOK_ID"));
@@ -128,7 +128,7 @@ public class BookQueryRepository implements IBookQueryRepository
             stmt.setString(1, name);
             stmt.setString(2, author);
             ResultSet rs = stmt.executeQuery();
-            if (rs.next())
+            while (rs.next())
             {
                 Book book = new Book();
                 book.setId(rs.getInt("BOOK_ID"));
@@ -181,6 +181,50 @@ public class BookQueryRepository implements IBookQueryRepository
         try (PreparedStatement stmt = con.prepareStatement(SqlQuery.DELETE_BOOK_BY_ID))
         {
             stmt.setInt(1, id);
+            rowNum = stmt.executeUpdate();
+        }
+        catch (SQLException e)
+        {
+            throw new SQLException(e.getMessage());
+        }
+        return rowNum;
+    }
+
+    @Override
+    public List<Book> findAllBook(Connection con) throws SQLException
+    {
+        List<Book> list = new ArrayList<>();
+        try (PreparedStatement stmt = con.prepareStatement(SqlQuery.ALL_BOOKS_SQL))
+        {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next())
+            {
+                Book book = new Book();
+                book.setId(rs.getInt("BOOK_ID"));
+                book.setName(rs.getString("NAME"));
+                book.setAuthor(rs.getString("AUTHOR"));
+                book.setCreateTime(rs.getLong("CREATE_TIME"));
+                book.setUpdateTime(rs.getLong("UPDATE_TIME"));
+
+                list.add(book);
+            }
+        }
+        catch (SQLException e)
+        {
+            throw new SQLException(e.getMessage());
+        }
+        return list;
+    }
+
+    @Override
+    public int updateBookById(Connection con, Integer id, String name, String author) throws SQLException
+    {
+        int rowNum = 0;
+        try (PreparedStatement stmt = con.prepareStatement(SqlQuery.UPDATE_BOOK_BY_ID))
+        {
+            stmt.setString(1, name);
+            stmt.setString(2, author);
+            stmt.setInt(3, id);
             rowNum = stmt.executeUpdate();
         }
         catch (SQLException e)
