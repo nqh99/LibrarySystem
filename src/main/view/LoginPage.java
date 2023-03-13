@@ -86,6 +86,7 @@ public class LoginPage extends JFrame
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(300, 100);
         this.setVisible(true);
+        this.setLocationRelativeTo(null);
         this.pack();
     }
 

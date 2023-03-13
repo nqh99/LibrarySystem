@@ -32,6 +32,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.table.AbstractTableModel;
 
+import app.UserRole;
 import main.configures.ApplicationCfg;
 import main.domain.ObjectType;
 import main.model.UserModel;
@@ -42,6 +43,7 @@ import main.services.impl.BookService;
 import main.services.impl.LibraryService;
 import main.services.impl.RenterService;
 import main.utils.DatabaseUtils;
+import main.utils.LoggerUtils;
 
 public class HomePage extends JFrame
 {
@@ -221,7 +223,7 @@ public class HomePage extends JFrame
         jScrollPane.setViewportView(contentTable);
 
         // Authenticate user
-        if ("user".equals(user.getRule()))
+        if (UserRole.USER.getValue().equals(user.getRule()))
         {
             activitiesPanel.setVisible(false);
             btnSave.setVisible(false);
@@ -238,11 +240,6 @@ public class HomePage extends JFrame
         layout.setVerticalGroup(layout.createParallelGroup(Alignment.LEADING).addGroup(layout.createSequentialGroup().addContainerGap().addGroup(layout.createParallelGroup(Alignment.LEADING).addComponent(tableNameLabel).addComponent(tableComboBox)).addGap(30, 30, 30).addGroup(layout.createParallelGroup(Alignment.LEADING).addGroup(layout.createSequentialGroup().addComponent(activitiesPanel).addGap(30, 30, 30).addGroup(layout.createParallelGroup(Alignment.LEADING).addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(btnDelete, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE).addComponent(btnUpdate, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)).addComponent(btnSave, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE))).addComponent(jScrollPane, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 400, GroupLayout.PREFERRED_SIZE)).addContainerGap(29, Short.MAX_VALUE))
 
         );
-    }
-
-    public static void main(String[] args)
-    {
-        new HomePage();
     }
 
     /**
@@ -276,7 +273,7 @@ public class HomePage extends JFrame
             }
             else
             {
-                alert("Please fill in all the details!");
+                LoggerUtils.alert(this, "Please fill in all the details!");
             }
         }
         else if (ObjectType.LIBRARY.getValue().equals(seletedItem))
@@ -297,7 +294,7 @@ public class HomePage extends JFrame
             }
             else
             {
-                alert("Please fill in all the details!!");
+                LoggerUtils.alert(this, "Please fill in all the details!!");
             }
         }
         else if (ObjectType.RENTER.getValue().equals(seletedItem))
@@ -319,13 +316,13 @@ public class HomePage extends JFrame
             }
             else
             {
-                alert("Please fill in all the details!!");
+                LoggerUtils.alert(this, "Please fill in all the details!!");
             }
         }
 
         if (isSaveSuccess)
         {
-            alert("Success!");
+            LoggerUtils.alert(this, "Save successfully!");
         }
 
         clearTextField(activitiesPanel.getComponents());
@@ -361,7 +358,7 @@ public class HomePage extends JFrame
             }
             else
             {
-                alert("There is nothing to update :(", "No row selected");
+                LoggerUtils.alert(this, "Please fill in all the details!");
             }
         }
         else if (ObjectType.LIBRARY.getValue().equals(seletedItem))
@@ -382,7 +379,7 @@ public class HomePage extends JFrame
             }
             else
             {
-                alert("Please fill in all the details!");
+                LoggerUtils.alert(this, "Please fill in all the details!");
             }
         }
         else if (ObjectType.RENTER.getValue().equals(seletedItem))
@@ -404,7 +401,7 @@ public class HomePage extends JFrame
             }
             else
             {
-                alert("Please fill in all the details!");
+                LoggerUtils.alert(this, "Please fill in all the details!");
             }
 
         }
@@ -412,7 +409,7 @@ public class HomePage extends JFrame
         if (isUpdateSuccess)
         {
             fetchData(con, seletedItem);
-            alert("Update successfully!");
+            LoggerUtils.alert(this, "Update successfully!");
         }
 
         clearTextField(activitiesPanel.getComponents());
@@ -462,7 +459,7 @@ public class HomePage extends JFrame
         if (isDeleteSuccess)
         {
             fetchData(con, seletedItem);
-            alert("Delete successfully!");
+            LoggerUtils.alert(this, "Delete successfully!");
         }
     }
 
@@ -537,7 +534,8 @@ public class HomePage extends JFrame
         }
         else
         {
-            alert("Cannot get table!");
+            LoggerUtils.alert(this, "Cannot get table!");
+//            alert("Cannot get table!");
         }
 
         contentTable.setModel(tableModel);
