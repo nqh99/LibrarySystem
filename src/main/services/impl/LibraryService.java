@@ -129,10 +129,26 @@ public class LibraryService implements ILibraryService
     }
 
     @Override
+    public LibraryModel findAllLibrary(Connection con)
+    {
+        LibraryModel libraryModel = (LibraryModel) objectMap.get(ObjectType.LIBRARY);
+        List<RealObject> list = new ArrayList<>();
+        try
+        {
+            list.addAll(libraryQueryRepository.findAllLibraries(con));
+            libraryModel.setLibraryList(list);
+        }
+        catch (SQLException e)
+        {
+            e.getMessage();
+        }
+        return libraryModel;
+    }
+
+    @Override
     public int removeLibraryById(Connection con, Integer id)
     {
         // TODO Auto-generated method stub
         return 0;
     }
-
 }

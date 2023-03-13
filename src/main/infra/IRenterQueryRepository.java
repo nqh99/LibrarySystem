@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.ibm.db2.jcc.am.SqlException;
+
 import main.domain.Renter;
 
 public interface IRenterQueryRepository
@@ -26,4 +28,6 @@ public interface IRenterQueryRepository
     public Renter findRenterByNameAndEmailAndPhoneNumber(Connection con, String name, String email, String phone) throws SQLException;
 
     public Renter findRenterByIdAndNameAndEmailAndPhoneNumber(Connection con, Integer id, String name, String email, String phone) throws SQLException;
+
+    public List<Renter> findAllRenters(Connection con) throws SqlException, SQLException;
 }

@@ -15,6 +15,8 @@ public interface ILibraryQueryRepository
     public Library findLibraryByLocation(Connection con, String location) throws SQLException;
 
     public Library findLibraryByNameAndLocation(Connection con, String name, String location) throws SQLException;
-    
-    public Library findLibraryByIdAndNameAndLocation(Connection con,Integer id, String name, String location) throws SQLException;
+
+    public Library findLibraryByIdAndNameAndLocation(Connection con, Integer id, String name, String location) throws SQLException;
+
+    public List<Library> findAllLibraries(Connection con) throws SQLException;
 }

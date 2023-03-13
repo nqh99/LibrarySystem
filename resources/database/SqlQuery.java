@@ -16,7 +16,7 @@ public final class SqlQuery
 
     public static final String BOOK_BY_ID_AND_NAME_AND_AUTHOR_SQL                   = "SELECT * FROM BOOKS b WHERE BOOK_ID =? AND NAME  =? AND AUTHOR =?";
 
-    public static final String ALL_LIBRARYS_SQL                                     = "SELECT * FROM LIBRARY";
+    public static final String ALL_LIBRARIES_SQL                                     = "SELECT * FROM LIBRARY";
 
     public static final String LIBRARY_BY_ID_SQL                                    = "SELECT * FROM LIBRARY l WHERE LIBRARY_ID =?";
 
@@ -28,7 +28,7 @@ public final class SqlQuery
 
     public static final String LIBRARY_BY_ID_AND_NAME_AND_LOCATION_SQL              = "SELECT * FROM LIBRARY l WHERE LIBRARY_ID =? AND Name =? AND LOCATION =?";
 
-    public static final String ALL_RENTER_SQL                                       = "SELECT * FROM RENTER";
+    public static final String ALL_RENTERS_SQL                                       = "SELECT * FROM RENTER";
 
     public static final String RENTER_BY_ID_SQL                                     = "SELECT * FROM RENTERS r WHERE RENTER_ID  =?";
 

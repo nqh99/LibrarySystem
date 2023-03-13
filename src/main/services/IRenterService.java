@@ -24,5 +24,7 @@ public interface IRenterService {
 	public RenterModel findRenterByIdAndNameAndEmailAndPhoneNumber(Connection con, Integer id, String name,
 			String email, String phone);
 
+	public RenterModel findAllRenters(Connection con);
+	
 	public int removeRenterById(Connection con, Integer id);
 }

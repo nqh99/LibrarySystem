@@ -74,7 +74,7 @@ public class RenterQueryRepository implements IRenterQueryRepository
         {
             stmt.setString(1, name);
             ResultSet rs = stmt.executeQuery();
-            if (rs.next())
+            while (rs.next())
             {
                 Renter renter = new Renter();
                 renter.setId(rs.getInt("RENTER_ID"));
@@ -282,5 +282,32 @@ public class RenterQueryRepository implements IRenterQueryRepository
             throw new SQLException(e.getMessage());
         }
         return renter;
+    }
+
+    @Override
+    public List<Renter> findAllRenters(Connection con) throws SQLException
+    {
+        List<Renter> list = new ArrayList<>();
+        try (PreparedStatement stmt = con.prepareStatement(SqlQuery.RENTER_BY_NAME_SQL))
+        {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next())
+            {
+                Renter renter = new Renter();
+                renter.setId(rs.getInt("RENTER_ID"));
+                renter.setName(rs.getString("NAME"));
+                renter.setEmail(rs.getString("EMAIL"));
+                renter.setPhoneNumber(rs.getString("PHONE_NUMBER"));
+                renter.setCreateTime(rs.getLong("CREATE_TIME"));
+                renter.setUpdateTime(rs.getLong("UPDATE_TIME"));
+
+                list.add(renter);
+            }
+        }
+        catch (SQLException e)
+        {
+            throw new SQLException(e.getMessage());
+        }
+        return list;
     }
 }

@@ -73,7 +73,7 @@ public class LibraryQueryRepository implements ILibraryQueryRepository
         {
             stmt.setString(1, name);
             ResultSet rs = stmt.executeQuery();
-            if (rs.next())
+            while (rs.next())
             {
                 Library library = new Library();
                 library.setId(rs.getInt("LIBRARY_ID"));
@@ -168,6 +168,32 @@ public class LibraryQueryRepository implements ILibraryQueryRepository
             throw new SQLException(e.getMessage());
         }
         return library;
+    }
+
+    @Override
+    public List<Library> findAllLibraries(Connection con) throws SQLException
+    {
+        List<Library> list = new ArrayList<>();
+        try (PreparedStatement stmt = con.prepareStatement(SqlQuery.ALL_LIBRARIES_SQL))
+        {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next())
+            {
+                Library library = new Library();
+                library.setId(rs.getInt("LIBRARY_ID"));
+                library.setName(rs.getString("NAME"));
+                library.setLocation(rs.getString("LOCATION"));
+                library.setCreateTime(rs.getLong("CREATE_TIME"));
+                library.setUpdateTime(rs.getLong("UPDATE_TIME"));
+
+                list.add(library);
+            }
+        }
+        catch (Exception e)
+        {
+            throw new SQLException(e.getMessage());
+        }
+        return list;
     }
 
 }

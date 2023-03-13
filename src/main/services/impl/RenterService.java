@@ -196,4 +196,21 @@ public class RenterService implements IRenterService
     {
         return 0;
     }
+
+    @Override
+    public RenterModel findAllRenters(Connection con)
+    {
+        RenterModel renterModel = (RenterModel) objectMap.get(ObjectType.RENTER);
+        List<RealObject> list = new ArrayList<>();
+        try
+        {
+            list.addAll(renterQueryRepository.findAllRenters(con));
+            renterModel.setRenterList(list);
+        }
+        catch (SQLException e)
+        {
+            e.getMessage();
+        }
+        return renterModel;
+    }
 }

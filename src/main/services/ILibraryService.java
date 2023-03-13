@@ -5,7 +5,8 @@ import java.sql.Connection;
 import main.model.LibraryModel;
 
 public interface ILibraryService {
-	public LibraryModel findLibraryById(Connection con, Integer id);
+	
+    public LibraryModel findLibraryById(Connection con, Integer id);
 
 	public LibraryModel findLibraryByName(Connection con, String name);
 
@@ -15,5 +16,7 @@ public interface ILibraryService {
 
 	public LibraryModel findLibraryByIdAndNameAndLocation(Connection con, Integer id, String name, String location);
 
+	public LibraryModel findAllLibrary(Connection con);
+	
 	public int removeLibraryById(Connection con, Integer id);
 }
