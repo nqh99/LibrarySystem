@@ -30,4 +30,11 @@ public interface IRenterQueryRepository
     public Renter findRenterByIdAndNameAndEmailAndPhoneNumber(Connection con, Integer id, String name, String email, String phone) throws SQLException;
 
     public List<Renter> findAllRenters(Connection con) throws SqlException, SQLException;
+
+    public boolean createRenter(Connection con, String name, String email, String phoneNumber, Long createTime, Long updateTime) throws SQLException;
+
+    public boolean removeRenterById(Connection con, Integer id) throws SQLException;
+
+    public boolean updateRenterById(Connection con, Integer id, String name, String email, String phoneNumber, Long updateTime) throws SQLException;
+
 }

@@ -19,4 +19,10 @@ public interface ILibraryQueryRepository
     public Library findLibraryByIdAndNameAndLocation(Connection con, Integer id, String name, String location) throws SQLException;
 
     public List<Library> findAllLibraries(Connection con) throws SQLException;
+    
+    public boolean createLibrary(Connection con, String name, String location, Long createTime, Long updateTime) throws SQLException;
+
+    public boolean removeLibraryById(Connection con, Integer id) throws SQLException;
+
+    public boolean updateLibraryById(Connection con, Integer id, String name, String location, Long updateTime) throws SQLException;
 }

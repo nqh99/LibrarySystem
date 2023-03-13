@@ -18,7 +18,9 @@ public interface IBookService
 
     public BookModel findBookByIdAndNameAndAuthor(Connection con, Integer id, String name, String author);
 
-    public int removeBookById(Connection con, Integer id);
+    public boolean removeBookById(Connection con, Integer id);
 
-    public int updateBookById(Connection con, Integer id, String name, String author);
+    public boolean updateBookById(Connection con, Integer id, String name, String author);
+    
+    public boolean createBook(Connection con, String name, String author);
 }

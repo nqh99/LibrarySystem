@@ -60,7 +60,7 @@ public class BookQueryRepository implements IBookQueryRepository
         }
         catch (SQLException e)
         {
-            throw new SQLException(e.getMessage());
+            e.printStackTrace();
         }
         return book;
     }
@@ -87,7 +87,7 @@ public class BookQueryRepository implements IBookQueryRepository
         }
         catch (SQLException e)
         {
-            throw new SQLException(e.getMessage());
+            e.printStackTrace();
         }
         return list;
     }
@@ -114,7 +114,7 @@ public class BookQueryRepository implements IBookQueryRepository
         }
         catch (SQLException e)
         {
-            throw new SQLException(e.getMessage());
+            e.printStackTrace();
         }
         return list;
     }
@@ -142,7 +142,7 @@ public class BookQueryRepository implements IBookQueryRepository
         }
         catch (SQLException e)
         {
-            throw new SQLException(e.getMessage());
+            e.printStackTrace();
         }
         return list;
     }
@@ -169,25 +169,29 @@ public class BookQueryRepository implements IBookQueryRepository
         }
         catch (SQLException e)
         {
-            throw new SQLException(e.getMessage());
+            e.printStackTrace();
         }
         return book;
     }
 
     @Override
-    public int removeBookById(Connection con, Integer id) throws SQLException
+    public boolean removeBookById(Connection con, Integer id) throws SQLException
     {
-        int rowNum = 0;
+        boolean result = false;
         try (PreparedStatement stmt = con.prepareStatement(SqlQuery.DELETE_BOOK_BY_ID))
         {
             stmt.setInt(1, id);
-            rowNum = stmt.executeUpdate();
+            int rows = stmt.executeUpdate();
+            if (rows > 0)
+            {
+                result = true;
+            }
         }
         catch (SQLException e)
         {
-            throw new SQLException(e.getMessage());
+            e.printStackTrace();
         }
-        return rowNum;
+        return result;
     }
 
     @Override
@@ -211,27 +215,56 @@ public class BookQueryRepository implements IBookQueryRepository
         }
         catch (SQLException e)
         {
-            throw new SQLException(e.getMessage());
+            e.printStackTrace();
         }
         return list;
     }
 
     @Override
-    public int updateBookById(Connection con, Integer id, String name, String author) throws SQLException
+    public boolean createBook(Connection con, String name, String author, Long createTime, Long updateTime) throws SQLException
     {
-        int rowNum = 0;
+        boolean result = false;
+        try (PreparedStatement stmt = con.prepareStatement(SqlQuery.INSERT_BOOK))
+        {
+            stmt.setString(1, name);
+            stmt.setString(2, author);
+            stmt.setLong(3, createTime);
+            stmt.setLong(4, updateTime);
+
+            int row = stmt.executeUpdate();
+            if (row > 0)
+            {
+                result = true;
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public boolean updateBookById(Connection con, Integer id, String name, String author, Long updateTime) throws SQLException
+    {
+        boolean result = false;
         try (PreparedStatement stmt = con.prepareStatement(SqlQuery.UPDATE_BOOK_BY_ID))
         {
             stmt.setString(1, name);
             stmt.setString(2, author);
-            stmt.setInt(3, id);
-            rowNum = stmt.executeUpdate();
+            stmt.setLong(3, updateTime);
+            stmt.setInt(4, id);
+            int rows = stmt.executeUpdate();
+            if (rows > 0)
+            {
+                result = true;
+            }
         }
         catch (SQLException e)
         {
-            throw new SQLException(e.getMessage());
+            e.printStackTrace();
         }
-        return rowNum;
+        return result;
     }
 
 }

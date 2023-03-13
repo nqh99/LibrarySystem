@@ -21,7 +21,9 @@ public interface IBookQueryRepository
 
     public Book findBookByIdAndNameAndAuthor(Connection con, Integer id, String name, String author) throws SQLException;
 
-    public int removeBookById(Connection con, Integer id) throws SQLException;
+    public boolean removeBookById(Connection con, Integer id) throws SQLException;
 
-    public int updateBookById(Connection con, Integer id, String name, String author) throws SQLException;
+    public boolean updateBookById(Connection con, Integer id, String name, String author, Long updateTime) throws SQLException;
+    
+    public boolean createBook(Connection con, String name, String author, Long createTime, Long updateTime) throws SQLException;
 }

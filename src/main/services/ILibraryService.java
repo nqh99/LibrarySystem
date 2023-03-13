@@ -18,5 +18,9 @@ public interface ILibraryService {
 
 	public LibraryModel findAllLibrary(Connection con);
 	
-	public int removeLibraryById(Connection con, Integer id);
+	public boolean removeLibraryById(Connection con, Integer id);
+	
+	public boolean updateLibraryById(Connection con, Integer id, String name, String location);
+	
+	public boolean createLibrary(Connection con, String name, String location);
 }

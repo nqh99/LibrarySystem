@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -192,9 +193,18 @@ public class RenterService implements IRenterService
     }
 
     @Override
-    public int removeRenterById(Connection con, Integer id)
+    public boolean removeRenterById(Connection con, Integer id)
     {
-        return 0;
+        boolean result = false;
+        try
+        {
+            result = renterQueryRepository.removeRenterById(con, id);
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e.getMessage());
+        }
+        return result;
     }
 
     @Override
@@ -212,5 +222,41 @@ public class RenterService implements IRenterService
             e.getMessage();
         }
         return renterModel;
+    }
+
+    @Override
+    public boolean createRenter(Connection con, String name, String email, String phoneNumber)
+    {
+        boolean result = false;
+
+        Long createTime = new Date().getTime();
+        Long updateTime = new Date().getTime();
+
+        try
+        {
+            result = renterQueryRepository.createRenter(con, name, email, phoneNumber, createTime, updateTime);
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e.getMessage());
+        }
+
+        return result;
+    }
+
+    @Override
+    public boolean updateRenterById(Connection con, Integer id, String name, String email, String phoneNumber)
+    {
+        boolean result = false;
+        Long updateTime = new Date().getTime();
+        try
+        {
+            result = renterQueryRepository.updateRenterById(con, id, name, email, phoneNumber, updateTime);
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e.getMessage());
+        }
+        return result;
     }
 }

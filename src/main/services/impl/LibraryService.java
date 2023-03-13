@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -146,9 +147,53 @@ public class LibraryService implements ILibraryService
     }
 
     @Override
-    public int removeLibraryById(Connection con, Integer id)
+    public boolean removeLibraryById(Connection con, Integer id)
     {
-        // TODO Auto-generated method stub
-        return 0;
+        boolean result = false;
+        try
+        {
+            result = libraryQueryRepository.removeLibraryById(con, id);
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e.getMessage());
+        }
+        return result;
+    }
+
+    @Override
+    public boolean createLibrary(Connection con, String name, String location)
+    {
+        boolean result = false;
+
+        Long createTime = new Date().getTime();
+        Long updateTime = new Date().getTime();
+
+        try
+        {
+            result = libraryQueryRepository.createLibrary(con, name, location, createTime, updateTime);
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e.getMessage());
+        }
+
+        return result;
+    }
+
+    @Override
+    public boolean updateLibraryById(Connection con, Integer id, String name, String location)
+    {
+        boolean result = false;
+        Long updateTime = new Date().getTime();
+        try
+        {
+            result = libraryQueryRepository.updateLibraryById(con, id, name, location, updateTime);
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e.getMessage());
+        }
+        return result;
     }
 }

@@ -196,4 +196,71 @@ public class LibraryQueryRepository implements ILibraryQueryRepository
         return list;
     }
 
+    @Override
+    public boolean createLibrary(Connection con, String name, String location, Long createTime, Long updateTime) throws SQLException
+    {
+        boolean result = false;
+        try (PreparedStatement stmt = con.prepareStatement(SqlQuery.INSERT_LIBRARY))
+        {
+            stmt.setString(1, name);
+            stmt.setString(2, location);
+            stmt.setLong(3, createTime);
+            stmt.setLong(4, updateTime);
+
+            int row = stmt.executeUpdate();
+            if (row > 0)
+            {
+                result = true;
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public boolean removeLibraryById(Connection con, Integer id) throws SQLException
+    {
+        boolean result = false;
+        try (PreparedStatement stmt = con.prepareStatement(SqlQuery.DELETE_LIBRARY_BY_ID))
+        {
+            stmt.setInt(1, id);
+            int rows = stmt.executeUpdate();
+            if (rows > 0)
+            {
+                result = true;
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public boolean updateLibraryById(Connection con, Integer id, String name, String location, Long updateTime) throws SQLException
+    {
+        boolean result = false;
+        try (PreparedStatement stmt = con.prepareStatement(SqlQuery.UPDATE_LIBRARY_BY_ID))
+        {
+            stmt.setString(1, name);
+            stmt.setString(2, location);
+            stmt.setLong(3, updateTime);
+            stmt.setInt(4, id);
+            int rows = stmt.executeUpdate();
+            if (rows > 0)
+            {
+                result = true;
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
 }

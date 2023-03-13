@@ -288,7 +288,7 @@ public class RenterQueryRepository implements IRenterQueryRepository
     public List<Renter> findAllRenters(Connection con) throws SQLException
     {
         List<Renter> list = new ArrayList<>();
-        try (PreparedStatement stmt = con.prepareStatement(SqlQuery.RENTER_BY_NAME_SQL))
+        try (PreparedStatement stmt = con.prepareStatement(SqlQuery.ALL_RENTERS_SQL))
         {
             ResultSet rs = stmt.executeQuery();
             while (rs.next())
@@ -309,5 +309,74 @@ public class RenterQueryRepository implements IRenterQueryRepository
             throw new SQLException(e.getMessage());
         }
         return list;
+    }
+
+    @Override
+    public boolean createRenter(Connection con, String name, String email, String phoneNumber, Long createTime, Long updateTime) throws SQLException
+    {
+        boolean result = false;
+        try (PreparedStatement stmt = con.prepareStatement(SqlQuery.INSERT_BOOK))
+        {
+            stmt.setString(1, name);
+            stmt.setString(2, email);
+            stmt.setString(3, phoneNumber);
+            stmt.setLong(4, createTime);
+            stmt.setLong(5, updateTime);
+
+            int row = stmt.executeUpdate();
+            if (row > 0)
+            {
+                result = true;
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public boolean removeRenterById(Connection con, Integer id) throws SQLException
+    {
+        boolean result = false;
+        try (PreparedStatement stmt = con.prepareStatement(SqlQuery.DELETE_RENTER_BY_ID))
+        {
+            stmt.setInt(1, id);
+            int rows = stmt.executeUpdate();
+            if (rows > 0)
+            {
+                result = true;
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public boolean updateRenterById(Connection con, Integer id, String name, String email, String phoneNumber, Long updateTime) throws SQLException
+    {
+        boolean result = false;
+        try (PreparedStatement stmt = con.prepareStatement(SqlQuery.UPDATE_RENTER_BY_ID))
+        {
+            stmt.setString(1, name);
+            stmt.setString(2, email);
+            stmt.setString(3, phoneNumber);
+            stmt.setLong(4, updateTime);
+            stmt.setInt(5, id);
+            int rows = stmt.executeUpdate();
+            if (rows > 0)
+            {
+                result = true;
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return result;
     }
 }

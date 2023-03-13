@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -57,7 +58,7 @@ public class BookService implements IBookService
         }
         catch (SQLException e)
         {
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
         return bookModel;
     }
@@ -74,7 +75,7 @@ public class BookService implements IBookService
         }
         catch (SQLException e)
         {
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
         return bookModel;
     }
@@ -91,7 +92,7 @@ public class BookService implements IBookService
         }
         catch (SQLException e)
         {
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
         return bookModel;
     }
@@ -108,7 +109,7 @@ public class BookService implements IBookService
         }
         catch (SQLException e)
         {
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
         return bookModel;
     }
@@ -124,22 +125,22 @@ public class BookService implements IBookService
         }
         catch (SQLException e)
         {
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
         return bookModel;
     }
 
     @Override
-    public int removeBookById(Connection con, Integer id)
+    public boolean removeBookById(Connection con, Integer id)
     {
-        int result = 0;
+        boolean result = false;
         try
         {
             result = bookQueryRepository.removeBookById(con, id);
         }
         catch (SQLException e)
         {
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
         return result;
     }
@@ -157,23 +158,44 @@ public class BookService implements IBookService
         }
         catch (SQLException e)
         {
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
         return bookModel;
     }
 
     @Override
-    public int updateBookById(Connection con, Integer id, String name, String author)
+    public boolean updateBookById(Connection con, Integer id, String name, String author)
     {
-        int result = 0;
+        boolean result = false;
+        Long updateTime = new Date().getTime();
         try
         {
-            result = bookQueryRepository.updateBookById(con, id, name, author);
+            result = bookQueryRepository.updateBookById(con, id, name, author, updateTime);
         }
         catch (SQLException e)
         {
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
+        return result;
+    }
+
+    @Override
+    public boolean createBook(Connection con, String name, String author)
+    {
+        boolean result = false;
+
+        Long createTime = new Date().getTime();
+        Long updateTime = new Date().getTime();
+
+        try
+        {
+            result = bookQueryRepository.createBook(con, name, author, createTime, updateTime);
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e.getMessage());
+        }
+
         return result;
     }
 
