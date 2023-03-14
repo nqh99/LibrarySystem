@@ -9,8 +9,10 @@ import main.utils.DateTimeUtils;
  * @author ttl
  *
  */
-public class Library extends RealObject
+public class Library
 {
+    private Audit        audit;
+
     private String       location;
 
     private List<Book>   books;
@@ -50,7 +52,17 @@ public class Library extends RealObject
     @Override
     public String toString()
     {
-        return "Library: " + " id=" + this.getId() + " name=" + this.getName() + " location=" + this.getLocation() + " createTime=" + DateTimeUtils.getDateTime(this.getCreateTime()) + " update=" + DateTimeUtils.getDateTime(this.getUpdateTime());
+        return "Library: " + " id=" + audit.getId() + " name=" + audit.getName() + " location=" + getLocation() + " createTime=" + DateTimeUtils.getDateTime(audit.getCreateTime()) + " update=" + DateTimeUtils.getDateTime(audit.getUpdateTime());
+    }
+
+    public Audit getAudit()
+    {
+        return audit;
+    }
+
+    public void setAudit(Audit audit)
+    {
+        this.audit = audit;
     }
 
 }

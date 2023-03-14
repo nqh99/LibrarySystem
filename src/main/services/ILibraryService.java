@@ -4,23 +4,16 @@ import java.sql.Connection;
 
 import main.model.LibraryModel;
 
-public interface ILibraryService {
-	
+public interface ILibraryService
+{
+
     public LibraryModel findLibraryById(Connection con, Integer id);
 
-	public LibraryModel findLibraryByName(Connection con, String name);
+    public LibraryModel findAllLibrary(Connection con);
 
-	public LibraryModel findLibraryByLocation(Connection con, String location);
+    public boolean removeLibraryById(Connection con, Integer id);
 
-	public LibraryModel findLibraryByNameAndLocation(Connection con, String name, String location);
+    public boolean updateLibraryById(Connection con, Integer id, String name, String location);
 
-	public LibraryModel findLibraryByIdAndNameAndLocation(Connection con, Integer id, String name, String location);
-
-	public LibraryModel findAllLibrary(Connection con);
-	
-	public boolean removeLibraryById(Connection con, Integer id);
-	
-	public boolean updateLibraryById(Connection con, Integer id, String name, String location);
-	
-	public boolean createLibrary(Connection con, String name, String location);
+    public boolean createLibrary(Connection con, String name, String location);
 }

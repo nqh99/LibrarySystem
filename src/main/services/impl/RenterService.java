@@ -4,15 +4,13 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.swing.table.AbstractTableModel;
 
 import main.configures.ApplicationCfg;
-import main.domain.ObjectType;
-import main.domain.RealObject;
+import main.domain.AuditType;
 import main.domain.Renter;
 import main.infra.IRenterQueryRepository;
 import main.infra.impl.RenterQueryRepository;
@@ -21,36 +19,14 @@ import main.services.IRenterService;
 
 public class RenterService implements IRenterService
 {
-    private final IRenterQueryRepository              renterQueryRepository = RenterQueryRepository.getInstance();
-
-    private final Map<ObjectType, AbstractTableModel> objectMap             = ApplicationCfg.getInstance().getObjectMap();
-
-    private static volatile RenterService             obj                   = null;
-
-    private RenterService()
-    {
-
-    }
-
-    public static RenterService getInstance()
-    {
-        if (obj == null)
-        {
-            synchronized (RenterService.class)
-            {
-                if (obj == null)
-                {
-                    obj = new RenterService();
-                }
-            }
-        }
-        return obj;
-    }
+    private final Map<AuditType, AbstractTableModel> objectMap = ApplicationCfg.getInstance().getObjectMap();
 
     @Override
     public RenterModel findRenterById(Connection con, Integer id)
     {
-        RenterModel renterModel = (RenterModel) objectMap.get(ObjectType.RENTER);
+        RenterModel renterModel = (RenterModel) objectMap.get(AuditType.RENTER);
+        IRenterQueryRepository renterQueryRepository = new RenterQueryRepository();
+
         try
         {
             Renter renter = renterQueryRepository.findRenterById(con, id);
@@ -58,136 +34,7 @@ public class RenterService implements IRenterService
         }
         catch (SQLException e)
         {
-            e.getMessage();
-        }
-        return renterModel;
-    }
-
-    @Override
-    public RenterModel findRenterByName(Connection con, String name)
-    {
-        RenterModel renterModel = (RenterModel) objectMap.get(ObjectType.RENTER);
-        List<RealObject> list = new ArrayList<>();
-        try
-        {
-            list.addAll(renterQueryRepository.findRenterByName(con, name));
-            renterModel.setRenterList(list);
-        }
-        catch (SQLException e)
-        {
-            e.getMessage();
-        }
-        return renterModel;
-    }
-
-    @Override
-    public RenterModel findRenterByEmail(Connection con, String email)
-    {
-        RenterModel renterModel = (RenterModel) objectMap.get(ObjectType.RENTER);
-        try
-        {
-            Renter renter = renterQueryRepository.findRenterByEmail(con, email);
-            renterModel.setRenterList(Arrays.asList(renter));
-        }
-        catch (SQLException e)
-        {
-            e.getMessage();
-        }
-        return renterModel;
-    }
-
-    @Override
-    public RenterModel findRenterByPhoneNumber(Connection con, String phone)
-    {
-        RenterModel renterModel = (RenterModel) objectMap.get(ObjectType.RENTER);
-        try
-        {
-            Renter renter = renterQueryRepository.findRenterByPhoneNumber(con, phone);
-            renterModel.setRenterList(Arrays.asList(renter));
-        }
-        catch (SQLException e)
-        {
-            e.getMessage();
-        }
-        return renterModel;
-    }
-
-    @Override
-    public RenterModel findRenterByNameAndEmail(Connection con, String name, String email)
-    {
-        RenterModel renterModel = (RenterModel) objectMap.get(ObjectType.RENTER);
-        try
-        {
-            Renter renter = renterQueryRepository.findRenterByNameAndEmail(con, name, email);
-            renterModel.setRenterList(Arrays.asList(renter));
-        }
-        catch (SQLException e)
-        {
-            e.getMessage();
-        }
-        return renterModel;
-    }
-
-    @Override
-    public RenterModel findRenterByNameAndPhoneNumber(Connection con, String name, String phone)
-    {
-        RenterModel renterModel = (RenterModel) objectMap.get(ObjectType.RENTER);
-        try
-        {
-            Renter renter = renterQueryRepository.findRenterByNameAndPhoneNumber(con, name, phone);
-            renterModel.setRenterList(Arrays.asList(renter));
-        }
-        catch (SQLException e)
-        {
-            e.getMessage();
-        }
-        return renterModel;
-    }
-
-    @Override
-    public RenterModel findRenterByEmailAndPhoneNumber(Connection con, String email, String phone)
-    {
-        RenterModel renterModel = (RenterModel) objectMap.get(ObjectType.RENTER);
-        try
-        {
-            Renter renter = renterQueryRepository.findRenterByEmailAndPhoneNumber(con, email, phone);
-            renterModel.setRenterList(Arrays.asList(renter));
-        }
-        catch (SQLException e)
-        {
-            e.getMessage();
-        }
-        return renterModel;
-    }
-
-    @Override
-    public RenterModel findRenterByNameAndEmailAndPhoneNumber(Connection con, String name, String email, String phone)
-    {
-        RenterModel renterModel = (RenterModel) objectMap.get(ObjectType.RENTER);
-        try
-        {
-            Renter renter = renterQueryRepository.findRenterByNameAndEmailAndPhoneNumber(con, name, email, phone);
-            renterModel.setRenterList(Arrays.asList(renter));
-        }
-        catch (SQLException e)
-        {
-            e.getMessage();
-        }
-        return renterModel;
-    }
-
-    @Override
-    public RenterModel findRenterByIdAndNameAndEmailAndPhoneNumber(Connection con, Integer id, String name, String email, String phone)
-    {
-        RenterModel renterModel = (RenterModel) objectMap.get(ObjectType.RENTER);
-        try
-        {
-            Renter renter = renterQueryRepository.findRenterByIdAndNameAndEmailAndPhoneNumber(con, id, name, email, phone);
-            renterModel.setRenterList(Arrays.asList(renter));
-        }
-        catch (SQLException e)
-        {
-            e.getMessage();
+            e.printStackTrace();
         }
         return renterModel;
     }
@@ -196,13 +43,15 @@ public class RenterService implements IRenterService
     public boolean removeRenterById(Connection con, Integer id)
     {
         boolean result = false;
+        IRenterQueryRepository renterQueryRepository = new RenterQueryRepository();
+
         try
         {
             result = renterQueryRepository.removeRenterById(con, id);
         }
         catch (SQLException e)
         {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         return result;
     }
@@ -210,8 +59,10 @@ public class RenterService implements IRenterService
     @Override
     public RenterModel findAllRenters(Connection con)
     {
-        RenterModel renterModel = (RenterModel) objectMap.get(ObjectType.RENTER);
-        List<RealObject> list = new ArrayList<>();
+        RenterModel renterModel = (RenterModel) objectMap.get(AuditType.RENTER);
+        List<Renter> list = new ArrayList<>();
+        IRenterQueryRepository renterQueryRepository = new RenterQueryRepository();
+
         try
         {
             list.addAll(renterQueryRepository.findAllRenters(con));
@@ -219,7 +70,7 @@ public class RenterService implements IRenterService
         }
         catch (SQLException e)
         {
-            e.getMessage();
+            e.printStackTrace();
         }
         return renterModel;
     }
@@ -228,17 +79,15 @@ public class RenterService implements IRenterService
     public boolean createRenter(Connection con, String name, String email, String phoneNumber)
     {
         boolean result = false;
-
-        Long createTime = new Date().getTime();
-        Long updateTime = new Date().getTime();
+        IRenterQueryRepository renterQueryRepository = new RenterQueryRepository();
 
         try
         {
-            result = renterQueryRepository.createRenter(con, name, email, phoneNumber, createTime, updateTime);
+            result = renterQueryRepository.createRenter(con, name, email, phoneNumber);
         }
         catch (SQLException e)
         {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
 
         return result;
@@ -248,14 +97,15 @@ public class RenterService implements IRenterService
     public boolean updateRenterById(Connection con, Integer id, String name, String email, String phoneNumber)
     {
         boolean result = false;
-        Long updateTime = new Date().getTime();
+        IRenterQueryRepository renterQueryRepository = new RenterQueryRepository();
+
         try
         {
-            result = renterQueryRepository.updateRenterById(con, id, name, email, phoneNumber, updateTime);
+            result = renterQueryRepository.updateRenterById(con, id, name, email, phoneNumber);
         }
         catch (SQLException e)
         {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         return result;
     }

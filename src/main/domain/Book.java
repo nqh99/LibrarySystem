@@ -2,8 +2,9 @@ package main.domain;
 
 import main.utils.DateTimeUtils;
 
-public class Book extends RealObject
+public class Book
 {
+    private Audit  audit;
 
     private String author;
 
@@ -17,10 +18,19 @@ public class Book extends RealObject
         this.author = author;
     }
 
+    public Audit getAudit()
+    {
+        return audit;
+    }
+
+    public void setAudit(Audit audit)
+    {
+        this.audit = audit;
+    }
+
     @Override
     public String toString()
     {
-        return "Book: " + " id=" + this.getId() + " name=" + this.getName() + " author=" + this.getAuthor() + " createTime=" + DateTimeUtils.getDateTime(this.getCreateTime()) + " update=" + DateTimeUtils.getDateTime(this.getUpdateTime());
+        return "Book: " + " id=" + audit.getId() + " name=" + audit.getName() + " author=" + getAuthor() + " createTime=" + DateTimeUtils.getDateTime(audit.getCreateTime()) + " update=" + DateTimeUtils.getDateTime(audit.getUpdateTime());
     }
-
 }

@@ -6,20 +6,19 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 import main.domain.Book;
-import main.domain.RealObject;
 
 public class BookModel extends AbstractTableModel
 {
     private static final long serialVersionUID = 1L;
 
-    private List<RealObject>  bookList;
+    private List<Book>        bookList;
 
     private final String[]    columnNames      = new String[] { "Id", "Name", "Author", "Create Time", "Update Time" };
 
     @SuppressWarnings("rawtypes")
     private final Class[]     columnClass      = new Class[] { Integer.class, String.class, String.class, Date.class, Date.class };
 
-    public BookModel(List<RealObject> bookList)
+    public BookModel(List<Book> bookList)
     {
         this.bookList = bookList;
     }
@@ -51,16 +50,16 @@ public class BookModel extends AbstractTableModel
     @Override
     public Object getValueAt(int rowIndex, int colIndex)
     {
-        Book row = (Book) bookList.get(rowIndex);
+        Book row = bookList.get(rowIndex);
         Object obj;
         switch (colIndex)
         {
         case 0:
-            obj = row.getId();
+            obj = (row.getAudit()).getId();
             break;
 
         case 1:
-            obj = row.getName();
+            obj = (row.getAudit()).getName();
             break;
 
         case 2:
@@ -68,11 +67,11 @@ public class BookModel extends AbstractTableModel
             break;
 
         case 3:
-            obj = row.getCreateTime();
+            obj = (row.getAudit()).getCreateTime();
             break;
 
         case 4:
-            obj = row.getUpdateTime();
+            obj = (row.getAudit()).getUpdateTime();
             break;
 
         default:
@@ -83,27 +82,21 @@ public class BookModel extends AbstractTableModel
         return obj;
     }
 
-    public List<RealObject> getBookList()
+    public List<Book> getBookList()
     {
         return bookList;
     }
 
-    public boolean setBookList(List<RealObject> bookList)
+    public boolean setBookList(List<Book> bookList)
     {
-        boolean result = false;
-
         if (bookList == null || bookList.size() == 0)
         {
             return false;
         }
 
-        if (Book.class.equals(bookList.get(0).getClass()))
-        {
-            this.bookList = bookList;
-            result = true;
-        }
+        this.bookList = bookList;
 
-        return result;
+        return true;
     }
 
 }

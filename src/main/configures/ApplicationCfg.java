@@ -2,13 +2,11 @@ package main.configures;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.swing.table.AbstractTableModel;
 
-import main.domain.ObjectType;
-import main.domain.RealObject;
+import main.domain.AuditType;
 import main.model.BookModel;
 import main.model.LibraryModel;
 import main.model.RenterModel;
@@ -26,13 +24,13 @@ import main.model.UserModel;
 public final class ApplicationCfg
 {
 
-    private static volatile ApplicationCfg            obj        = null;
+    private static volatile ApplicationCfg           obj        = null;
 
-    private final Map<ObjectType, AbstractTableModel> objectMap;
+    private final Map<AuditType, AbstractTableModel> objectMap;
 
-    private UserModel                                 user;
+    private UserModel                                user;
 
-    private final String[]                            tableNames = new String[] { ObjectType.BOOK.getValue(), ObjectType.LIBRARY.getValue(), ObjectType.RENTER.getValue() };
+    private final String[]                           tableNames = new String[] { AuditType.BOOK.getValue(), AuditType.LIBRARY.getValue(), AuditType.RENTER.getValue() };
 
     private ApplicationCfg()
     {
@@ -54,19 +52,18 @@ public final class ApplicationCfg
         return obj;
     }
 
-    public Map<ObjectType, AbstractTableModel> createObjectMap()
+    public Map<AuditType, AbstractTableModel> createObjectMap()
     {
 
-        Map<ObjectType, AbstractTableModel> objecMap = new HashMap<>();
-        List<RealObject> datas = new ArrayList<>();
-        objecMap.put(ObjectType.BOOK, new BookModel(datas));
-        objecMap.put(ObjectType.LIBRARY, new LibraryModel(datas));
-        objecMap.put(ObjectType.RENTER, new RenterModel(datas));
+        Map<AuditType, AbstractTableModel> objecMap = new HashMap<>();
+        objecMap.put(AuditType.BOOK, new BookModel(new ArrayList<>()));
+        objecMap.put(AuditType.LIBRARY, new LibraryModel(new ArrayList<>()));
+        objecMap.put(AuditType.RENTER, new RenterModel(new ArrayList<>()));
 
         return objecMap;
     }
 
-    public Map<ObjectType, AbstractTableModel> getObjectMap()
+    public Map<AuditType, AbstractTableModel> getObjectMap()
     {
         return objectMap;
     }

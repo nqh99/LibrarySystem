@@ -5,21 +5,20 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import main.domain.RealObject;
 import main.domain.Renter;
 
 public class RenterModel extends AbstractTableModel
 {
     private static final long serialVersionUID = 1L;
 
-    private List<RealObject>  renterList;
+    private List<Renter>      renterList;
 
     private final String[]    columnNames      = new String[] { "Id", "Name", "Email", "Phone_Number", "Create_Time", "Update_Time" };
 
     @SuppressWarnings("rawtypes")
     private final Class[]     columnClass      = new Class[] { Integer.class, String.class, String.class, String.class, Date.class, Date.class };
 
-    public RenterModel(List<RealObject> renterList)
+    public RenterModel(List<Renter> renterList)
     {
         this.renterList = renterList;
     }
@@ -51,16 +50,16 @@ public class RenterModel extends AbstractTableModel
     @Override
     public Object getValueAt(int rowIndex, int colIndex)
     {
-        Renter row = (Renter) renterList.get(rowIndex);
+        Renter row = renterList.get(rowIndex);
         Object obj;
         switch (colIndex)
         {
         case 0:
-            obj = row.getId();
+            obj = (row.getAudit()).getId();
             break;
 
         case 1:
-            obj = row.getName();
+            obj = (row.getAudit()).getName();
             break;
 
         case 2:
@@ -72,11 +71,11 @@ public class RenterModel extends AbstractTableModel
             break;
 
         case 4:
-            obj = row.getCreateTime();
+            obj = (row.getAudit()).getCreateTime();
             break;
 
         case 5:
-            obj = row.getUpdateTime();
+            obj = (row.getAudit()).getUpdateTime();
             break;
 
         default:
@@ -87,26 +86,20 @@ public class RenterModel extends AbstractTableModel
         return obj;
     }
 
-    public List<RealObject> getRenterList()
+    public List<Renter> getRenterList()
     {
         return renterList;
     }
 
-    public boolean setRenterList(List<RealObject> renterList)
+    public boolean setRenterList(List<Renter> renterList)
     {
-        boolean result = false;
-
         if (renterList == null || renterList.size() == 0)
         {
             return false;
         }
 
-        if (Renter.class.equals(renterList.get(0).getClass()))
-        {
-            this.renterList = renterList;
-            result = true;
-        }
+        this.renterList = renterList;
 
-        return result;
+        return true;
     }
 }

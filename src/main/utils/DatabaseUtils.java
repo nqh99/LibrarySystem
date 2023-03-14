@@ -8,14 +8,13 @@ import main.configures.DatabaseCfg;
 
 public class DatabaseUtils
 {
-    private final static DatabaseCfg databaseCfg = DatabaseCfg.getInstance();
-
-    public static Connection getConnection() throws SQLException
+    public static Connection getConnection(DatabaseCfg databaseCfg) throws SQLException
     {
         return DriverManager.getConnection(databaseCfg.getConnectionURL(), databaseCfg.getUsername(), databaseCfg.getPassword());
     }
-    
-    public static void closeConnection(Connection c) throws SQLException {
+
+    public static void closeConnection(Connection c) throws SQLException
+    {
         c.close();
     }
 }

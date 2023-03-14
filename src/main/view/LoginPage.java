@@ -19,6 +19,7 @@ import main.model.UserModel;
 import main.services.ILoginService;
 import main.services.impl.LoginService;
 import main.utils.DatabaseUtils;
+import main.utils.LoggerUtils;
 
 public class LoginPage extends JFrame
 {
@@ -65,14 +66,18 @@ public class LoginPage extends JFrame
                     {
                         applicationCfg.setUser(user);
                         new HomePage();
-                        closeFrame();
+                        getLoginPage().dispose();
+                    }
+                    else
+                    {
+                        LoggerUtils.alert(getLoginPage(), user.getMessage(), "Warning:");
                     }
                 }
                 catch (SQLException e1)
                 {
+                    LoggerUtils.alert(getLoginPage(), "Something was wrong!", "Warning:");
                     e1.printStackTrace();
                 }
-
             }
         });
 
@@ -90,8 +95,8 @@ public class LoginPage extends JFrame
         this.pack();
     }
 
-    private void closeFrame()
+    private JFrame getLoginPage()
     {
-        this.dispose();
+        return this;
     }
 }

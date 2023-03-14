@@ -2,8 +2,10 @@ package main.domain;
 
 import main.utils.DateTimeUtils;
 
-public class Renter extends RealObject
+public class Renter
 {
+
+    private Audit  audit;
 
     private String phoneNumber;
 
@@ -19,6 +21,16 @@ public class Renter extends RealObject
         this.phoneNumber = phoneNumber;
     }
 
+    public Audit getAudit()
+    {
+        return audit;
+    }
+
+    public void setAudit(Audit audit)
+    {
+        this.audit = audit;
+    }
+
     public String getEmail()
     {
         return email;
@@ -32,7 +44,7 @@ public class Renter extends RealObject
     @Override
     public String toString()
     {
-        return "Renter: " + " id=" + this.getId() + " name=" + this.getName() + " email=" + this.getEmail() + " phone_number=" + this.getPhoneNumber() + " createTime=" + DateTimeUtils.getDateTime(this.getCreateTime()) + " update=" + DateTimeUtils.getDateTime(this.getUpdateTime());
+        return "Renter: " + " id=" + audit.getId() + " name=" + audit.getName() + " email=" + getEmail() + " phone_number=" + getPhoneNumber() + " createTime=" + DateTimeUtils.getDateTime(audit.getCreateTime()) + " update=" + DateTimeUtils.getDateTime(audit.getUpdateTime());
     }
 
 }

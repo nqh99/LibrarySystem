@@ -22,7 +22,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -34,7 +33,8 @@ import javax.swing.table.AbstractTableModel;
 
 import app.UserRole;
 import main.configures.ApplicationCfg;
-import main.domain.ObjectType;
+import main.configures.DatabaseCfg;
+import main.domain.AuditType;
 import main.model.UserModel;
 import main.services.IBookService;
 import main.services.ILibraryService;
@@ -51,12 +51,6 @@ public class HomePage extends JFrame
     private static final long  serialVersionUID = 1L;
 
     private Connection         con;
-
-    private IBookService       bookService      = BookService.getInstance();
-
-    private ILibraryService    libraryService   = LibraryService.getInstance();
-
-    private IRenterService     renterService    = RenterService.getInstance();
 
     private ApplicationCfg     applicationCfg   = ApplicationCfg.getInstance();
 
@@ -151,7 +145,7 @@ public class HomePage extends JFrame
                 }
                 else
                 {
-                    alert("Please choose table!");
+                    LoggerUtils.alert(getHomePage(), "Please choose table!");
                 }
             }
         });
@@ -170,15 +164,15 @@ public class HomePage extends JFrame
                 }
                 else if (isSelectTable)
                 {
-                    alert("Please choose record on table to update or delete!");
+                    LoggerUtils.alert(getHomePage(), "Please choose record on table to update or delete!");
                 }
                 else if (isSelectRecord)
                 {
-                    alert("Please choose table!");
+                    LoggerUtils.alert(getHomePage(), "Please choose table!");
                 }
                 else
                 {
-                    alert("Please choose table and then select record to update or delete!");
+                    LoggerUtils.alert(getHomePage(), "Please choose table and then select record to update or delete!");
                 }
             }
         });
@@ -196,15 +190,15 @@ public class HomePage extends JFrame
                 }
                 else if (isSelectTable)
                 {
-                    alert("Please choose record on table to update or delete!");
+                    LoggerUtils.alert(getHomePage(), "Please choose record on table to update or delete!");
                 }
                 else if (isSelectRecord)
                 {
-                    alert("Please choose table!");
+                    LoggerUtils.alert(getHomePage(), "Please choose table!");
                 }
                 else
                 {
-                    alert("Please choose table and then select record to update or delete!");
+                    LoggerUtils.alert(getHomePage(), "Please choose table and then select record to update or delete!");
                 }
             }
         });
@@ -255,7 +249,7 @@ public class HomePage extends JFrame
         String seletedItem = String.valueOf(tableComboBox.getSelectedItem());
 
         boolean isSaveSuccess = false;
-        if (ObjectType.BOOK.getValue().equals(seletedItem))
+        if (AuditType.BOOK.getValue().equals(seletedItem))
         {
             String name = inputs.get(0);
             String author = inputs.get(1);
@@ -263,7 +257,9 @@ public class HomePage extends JFrame
             {
                 try
                 {
-                    con = DatabaseUtils.getConnection();
+                    DatabaseCfg databaseCfg = new DatabaseCfg();
+                    IBookService bookService = new BookService();
+                    con = DatabaseUtils.getConnection(databaseCfg);
                     isSaveSuccess = bookService.createBook(con, name, author);
                 }
                 catch (SQLException e1)
@@ -276,7 +272,7 @@ public class HomePage extends JFrame
                 LoggerUtils.alert(this, "Please fill in all the details!");
             }
         }
-        else if (ObjectType.LIBRARY.getValue().equals(seletedItem))
+        else if (AuditType.LIBRARY.getValue().equals(seletedItem))
         {
             String name = inputs.get(0);
             String location = inputs.get(1);
@@ -284,7 +280,9 @@ public class HomePage extends JFrame
             {
                 try
                 {
-                    con = DatabaseUtils.getConnection();
+                    DatabaseCfg databaseCfg = new DatabaseCfg();
+                    ILibraryService libraryService = new LibraryService();
+                    con = DatabaseUtils.getConnection(databaseCfg);
                     isSaveSuccess = libraryService.createLibrary(con, name, location);
                 }
                 catch (SQLException e1)
@@ -297,7 +295,7 @@ public class HomePage extends JFrame
                 LoggerUtils.alert(this, "Please fill in all the details!!");
             }
         }
-        else if (ObjectType.RENTER.getValue().equals(seletedItem))
+        else if (AuditType.RENTER.getValue().equals(seletedItem))
         {
             String name = inputs.get(0);
             String email = inputs.get(1);
@@ -306,7 +304,9 @@ public class HomePage extends JFrame
             {
                 try
                 {
-                    con = DatabaseUtils.getConnection();
+                    DatabaseCfg databaseCfg = new DatabaseCfg();
+                    IRenterService renterService = new RenterService();
+                    con = DatabaseUtils.getConnection(databaseCfg);
                     isSaveSuccess = renterService.createRenter(con, name, email, phoneNumber);
                 }
                 catch (SQLException e1)
@@ -340,7 +340,7 @@ public class HomePage extends JFrame
 
         String seletedItem = String.valueOf(tableComboBox.getSelectedItem());
         boolean isUpdateSuccess = false;
-        if (ObjectType.BOOK.getValue().equals(seletedItem))
+        if (AuditType.BOOK.getValue().equals(seletedItem))
         {
             String name = inputs.get(0);
             String author = inputs.get(1);
@@ -348,7 +348,9 @@ public class HomePage extends JFrame
             {
                 try
                 {
-                    con = DatabaseUtils.getConnection();
+                    DatabaseCfg databaseCfg = new DatabaseCfg();
+                    IBookService bookService = new BookService();
+                    con = DatabaseUtils.getConnection(databaseCfg);
                     isUpdateSuccess = bookService.updateBookById(con, idOfRecord, name, author);
                 }
                 catch (SQLException e1)
@@ -361,7 +363,7 @@ public class HomePage extends JFrame
                 LoggerUtils.alert(this, "Please fill in all the details!");
             }
         }
-        else if (ObjectType.LIBRARY.getValue().equals(seletedItem))
+        else if (AuditType.LIBRARY.getValue().equals(seletedItem))
         {
             String name = inputs.get(0);
             String location = inputs.get(1);
@@ -369,7 +371,9 @@ public class HomePage extends JFrame
             {
                 try
                 {
-                    con = DatabaseUtils.getConnection();
+                    DatabaseCfg databaseCfg = new DatabaseCfg();
+                    ILibraryService libraryService = new LibraryService();
+                    con = DatabaseUtils.getConnection(databaseCfg);
                     isUpdateSuccess = libraryService.updateLibraryById(con, idOfRecord, name, location);
                 }
                 catch (SQLException e1)
@@ -382,7 +386,7 @@ public class HomePage extends JFrame
                 LoggerUtils.alert(this, "Please fill in all the details!");
             }
         }
-        else if (ObjectType.RENTER.getValue().equals(seletedItem))
+        else if (AuditType.RENTER.getValue().equals(seletedItem))
         {
             String name = inputs.get(0);
             String email = inputs.get(1);
@@ -391,7 +395,9 @@ public class HomePage extends JFrame
             {
                 try
                 {
-                    con = DatabaseUtils.getConnection();
+                    DatabaseCfg databaseCfg = new DatabaseCfg();
+                    IRenterService renterService = new RenterService();
+                    con = DatabaseUtils.getConnection(databaseCfg);
                     isUpdateSuccess = renterService.updateRenterById(con, idOfRecord, name, email, phoneNumber);
                 }
                 catch (SQLException e1)
@@ -419,7 +425,7 @@ public class HomePage extends JFrame
     {
         String seletedItem = String.valueOf(tableComboBox.getSelectedItem());
         boolean isDeleteSuccess = false;
-        if (ObjectType.BOOK.getValue().equals(seletedItem))
+        if (AuditType.BOOK.getValue().equals(seletedItem))
         {
             try
             {
@@ -431,7 +437,7 @@ public class HomePage extends JFrame
                 System.out.println(e1.getMessage());
             }
         }
-        else if (ObjectType.LIBRARY.getValue().equals(seletedItem))
+        else if (AuditType.LIBRARY.getValue().equals(seletedItem))
         {
             try
             {
@@ -443,11 +449,13 @@ public class HomePage extends JFrame
                 System.out.println(e1.getMessage());
             }
         }
-        else if (ObjectType.RENTER.getValue().equals(seletedItem))
+        else if (AuditType.RENTER.getValue().equals(seletedItem))
         {
             try
             {
-                con = DatabaseUtils.getConnection();
+                DatabaseCfg databaseCfg = new DatabaseCfg();
+                IRenterService renterService = new RenterService();
+                con = DatabaseUtils.getConnection(databaseCfg);
                 isDeleteSuccess = renterService.removeRenterById(con, idOfRecord);
             }
             catch (SQLException e1)
@@ -494,48 +502,27 @@ public class HomePage extends JFrame
     }
 
     /**
-     * method to show an info alert
-     * 
-     * @param msg: message
-     */
-    public void alert(String msg)
-    {
-        JOptionPane.showMessageDialog(rootPane, msg);
-    }
-
-    /**
-     * method to show an error alert
-     * 
-     * @param msg: message
-     */
-    public void alert(String msg, String title)
-    {
-        JOptionPane.showMessageDialog(rootPane, msg, title, JOptionPane.ERROR_MESSAGE);
-    }
-
-    /**
      * fetch all records from database for corresponding table
      * 
      * @param seletedItem: is a table name
      */
     private void fetchData(Connection con, String seletedItem)
     {
-        if (ObjectType.BOOK.getValue().equals(seletedItem))
+        if (AuditType.BOOK.getValue().equals(seletedItem))
         {
             tableModel = bookService.findAllBook(con);
         }
-        else if (ObjectType.LIBRARY.getValue().equals(seletedItem))
+        else if (AuditType.LIBRARY.getValue().equals(seletedItem))
         {
             tableModel = libraryService.findAllLibrary(con);
         }
-        else if (ObjectType.RENTER.getValue().equals(seletedItem))
+        else if (AuditType.RENTER.getValue().equals(seletedItem))
         {
             tableModel = renterService.findAllRenters(con);
         }
         else
         {
             LoggerUtils.alert(this, "Cannot get table!");
-//            alert("Cannot get table!");
         }
 
         contentTable.setModel(tableModel);
@@ -582,5 +569,10 @@ public class HomePage extends JFrame
             }
         }
         return inputs;
+    }
+
+    private JFrame getHomePage()
+    {
+        return this;
     }
 }

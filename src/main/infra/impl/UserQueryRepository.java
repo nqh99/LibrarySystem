@@ -17,26 +17,6 @@ import main.infra.IUserQueryRepository;
  */
 public class UserQueryRepository implements IUserQueryRepository
 {
-    private static volatile UserQueryRepository obj = null;
-
-    private UserQueryRepository()
-    {
-    }
-
-    public static UserQueryRepository getInstance()
-    {
-        if (obj == null)
-        {
-            synchronized (UserQueryRepository.class)
-            {
-                if (obj == null)
-                {
-                    obj = new UserQueryRepository();
-                }
-            }
-        }
-        return obj;
-    }
 
     @Override
     public User findUserByUsernameAndPassword(Connection con, String username, String password) throws SQLException

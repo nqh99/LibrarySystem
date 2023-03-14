@@ -4,16 +4,14 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.swing.table.AbstractTableModel;
 
 import main.configures.ApplicationCfg;
+import main.domain.AuditType;
 import main.domain.Library;
-import main.domain.ObjectType;
-import main.domain.RealObject;
 import main.infra.ILibraryQueryRepository;
 import main.infra.impl.LibraryQueryRepository;
 import main.model.LibraryModel;
@@ -22,36 +20,14 @@ import main.services.ILibraryService;
 public class LibraryService implements ILibraryService
 {
 
-    private final ILibraryQueryRepository             libraryQueryRepository = LibraryQueryRepository.getInstance();
-
-    private final Map<ObjectType, AbstractTableModel> objectMap              = ApplicationCfg.getInstance().getObjectMap();
-
-    private static volatile LibraryService            obj                    = null;
-
-    private LibraryService()
-    {
-
-    }
-
-    public static LibraryService getInstance()
-    {
-        if (obj == null)
-        {
-            synchronized (LibraryService.class)
-            {
-                if (obj == null)
-                {
-                    obj = new LibraryService();
-                }
-            }
-        }
-        return obj;
-    }
+    private final Map<AuditType, AbstractTableModel> objectMap = ApplicationCfg.getInstance().getObjectMap();
 
     @Override
     public LibraryModel findLibraryById(Connection con, Integer id)
     {
-        LibraryModel libraryModel = (LibraryModel) objectMap.get(ObjectType.LIBRARY);
+        LibraryModel libraryModel = (LibraryModel) objectMap.get(AuditType.LIBRARY);
+        ILibraryQueryRepository libraryQueryRepository = new LibraryQueryRepository();
+
         try
         {
             Library library = libraryQueryRepository.findLibraryById(con, id);
@@ -59,81 +35,18 @@ public class LibraryService implements ILibraryService
         }
         catch (SQLException e)
         {
-            e.getMessage();
+            e.printStackTrace();
         }
-        return libraryModel;
-    }
 
-    @Override
-    public LibraryModel findLibraryByName(Connection con, String name)
-    {
-        LibraryModel libraryModel = (LibraryModel) objectMap.get(ObjectType.LIBRARY);
-        List<RealObject> list = new ArrayList<>();
-        try
-        {
-            list.addAll(libraryQueryRepository.findLibraryByName(con, name));
-            libraryModel.setLibraryList(list);
-        }
-        catch (SQLException e)
-        {
-            e.getMessage();
-        }
-        return libraryModel;
-    }
-
-    @Override
-    public LibraryModel findLibraryByLocation(Connection con, String location)
-    {
-        LibraryModel libraryModel = (LibraryModel) objectMap.get(ObjectType.LIBRARY);
-        try
-        {
-            Library library = libraryQueryRepository.findLibraryByLocation(con, location);
-            libraryModel.setLibraryList(Arrays.asList(library));
-        }
-        catch (SQLException e)
-        {
-            e.getMessage();
-        }
-        return libraryModel;
-    }
-
-    @Override
-    public LibraryModel findLibraryByNameAndLocation(Connection con, String name, String location)
-    {
-        LibraryModel libraryModel = (LibraryModel) objectMap.get(ObjectType.LIBRARY);
-        try
-        {
-            Library library = libraryQueryRepository.findLibraryByNameAndLocation(con, name, location);
-            libraryModel.setLibraryList(Arrays.asList(library));
-        }
-        catch (SQLException e)
-        {
-            e.getMessage();
-        }
-        return libraryModel;
-    }
-
-    @Override
-    public LibraryModel findLibraryByIdAndNameAndLocation(Connection con, Integer id, String name, String location)
-    {
-        LibraryModel libraryModel = (LibraryModel) objectMap.get(ObjectType.LIBRARY);
-        try
-        {
-            Library library = libraryQueryRepository.findLibraryByIdAndNameAndLocation(con, id, name, location);
-            libraryModel.setLibraryList(Arrays.asList(library));
-        }
-        catch (SQLException e)
-        {
-            e.getMessage();
-        }
         return libraryModel;
     }
 
     @Override
     public LibraryModel findAllLibrary(Connection con)
     {
-        LibraryModel libraryModel = (LibraryModel) objectMap.get(ObjectType.LIBRARY);
-        List<RealObject> list = new ArrayList<>();
+        LibraryModel libraryModel = (LibraryModel) objectMap.get(AuditType.LIBRARY);
+        ILibraryQueryRepository libraryQueryRepository = new LibraryQueryRepository();
+        List<Library> list = new ArrayList<>();
         try
         {
             list.addAll(libraryQueryRepository.findAllLibraries(con));
@@ -141,7 +54,7 @@ public class LibraryService implements ILibraryService
         }
         catch (SQLException e)
         {
-            e.getMessage();
+            e.printStackTrace();
         }
         return libraryModel;
     }
@@ -149,6 +62,7 @@ public class LibraryService implements ILibraryService
     @Override
     public boolean removeLibraryById(Connection con, Integer id)
     {
+        ILibraryQueryRepository libraryQueryRepository = new LibraryQueryRepository();
         boolean result = false;
         try
         {
@@ -156,7 +70,7 @@ public class LibraryService implements ILibraryService
         }
         catch (SQLException e)
         {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         return result;
     }
@@ -164,18 +78,16 @@ public class LibraryService implements ILibraryService
     @Override
     public boolean createLibrary(Connection con, String name, String location)
     {
+        ILibraryQueryRepository libraryQueryRepository = new LibraryQueryRepository();
         boolean result = false;
-
-        Long createTime = new Date().getTime();
-        Long updateTime = new Date().getTime();
 
         try
         {
-            result = libraryQueryRepository.createLibrary(con, name, location, createTime, updateTime);
+            result = libraryQueryRepository.createLibrary(con, name, location);
         }
         catch (SQLException e)
         {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
 
         return result;
@@ -184,15 +96,16 @@ public class LibraryService implements ILibraryService
     @Override
     public boolean updateLibraryById(Connection con, Integer id, String name, String location)
     {
+        ILibraryQueryRepository libraryQueryRepository = new LibraryQueryRepository();
         boolean result = false;
-        Long updateTime = new Date().getTime();
+
         try
         {
-            result = libraryQueryRepository.updateLibraryById(con, id, name, location, updateTime);
+            result = libraryQueryRepository.updateLibraryById(con, id, name, location);
         }
         catch (SQLException e)
         {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         return result;
     }

@@ -11,34 +11,11 @@ import main.services.ILoginService;
 
 public class LoginService implements ILoginService
 {
-    private final IUserQueryRepository   userQueryRepository = UserQueryRepository.getInstance();
-
-    private static volatile LoginService obj                 = null;
-
-    private LoginService()
-    {
-
-    }
-
-    public static LoginService getInstance()
-    {
-        if (obj == null)
-        {
-            synchronized (LoginService.class)
-            {
-                if (obj == null)
-                {
-                    obj = new LoginService();
-                }
-            }
-        }
-        return obj;
-    }
-
     @Override
     public UserModel findUserByUsernameAndPassword(Connection con, String username, String password)
     {
         UserModel userModel = new UserModel();
+        IUserQueryRepository userQueryRepository = new UserQueryRepository();
         try
         {
             User user = userQueryRepository.findUserByUsernameAndPassword(con, username, password);

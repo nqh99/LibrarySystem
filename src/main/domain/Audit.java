@@ -1,6 +1,6 @@
 package main.domain;
 
-public abstract class RealObject
+public class Audit
 {
 
     private Integer id;
@@ -50,6 +50,4 @@ public abstract class RealObject
     {
         this.updateTime = updateTime;
     }
-
-    public abstract String toString();
 }

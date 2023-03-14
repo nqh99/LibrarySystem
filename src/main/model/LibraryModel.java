@@ -6,20 +6,19 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 import main.domain.Library;
-import main.domain.RealObject;
 
 public class LibraryModel extends AbstractTableModel
 {
     private static final long serialVersionUID = 1L;
 
-    private List<RealObject>  libraryList;
+    private List<Library>     libraryList;
 
     private final String[]    columnNames      = new String[] { "Id", "Name", "Location", "Create_Time", "Update_Time" };
 
     @SuppressWarnings("rawtypes")
     private final Class[]     columnClass      = new Class[] { Integer.class, String.class, String.class, Date.class, Date.class };
 
-    public LibraryModel(List<RealObject> libraryList)
+    public LibraryModel(List<Library> libraryList)
     {
         this.libraryList = libraryList;
     }
@@ -56,11 +55,11 @@ public class LibraryModel extends AbstractTableModel
         switch (colIndex)
         {
         case 0:
-            obj = row.getId();
+            obj = (row.getAudit()).getId();
             break;
 
         case 1:
-            obj = row.getName();
+            obj = (row.getAudit()).getName();
             break;
 
         case 2:
@@ -68,11 +67,11 @@ public class LibraryModel extends AbstractTableModel
             break;
 
         case 3:
-            obj = row.getCreateTime();
+            obj = (row.getAudit()).getCreateTime();
             break;
 
         case 4:
-            obj = row.getUpdateTime();
+            obj = (row.getAudit()).getUpdateTime();
             break;
 
         default:
@@ -83,27 +82,21 @@ public class LibraryModel extends AbstractTableModel
         return obj;
     }
 
-    public List<RealObject> getLibraryList()
+    public List<Library> getLibraryList()
     {
         return libraryList;
     }
 
-    public boolean setLibraryList(List<RealObject> libraryList)
+    public boolean setLibraryList(List<Library> libraryList)
     {
-        boolean result = false;
-
         if (libraryList == null || libraryList.size() == 0)
         {
             return false;
         }
 
-        if (Library.class.equals(libraryList.get(0).getClass()))
-        {
-            this.libraryList = libraryList;
-            result = true;
-        }
+        this.libraryList = libraryList;
 
-        return result;
+        return true;
     }
 
 }

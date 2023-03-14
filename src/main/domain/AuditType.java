@@ -1,12 +1,12 @@
 package main.domain;
 
-public enum ObjectType
+public enum AuditType
 {
     BOOK("book"), LIBRARY("library"), RENTER("renter");
 
     private String value;
 
-    ObjectType(String value)
+    AuditType(String value)
     {
         this.value = value;
     }
@@ -16,9 +16,9 @@ public enum ObjectType
         return value;
     }
 
-    public static ObjectType fromValue(String value)
+    public static AuditType fromValue(String value)
     {
-        for (ObjectType objType : ObjectType.values())
+        for (AuditType objType : AuditType.values())
         {
             if (objType.getValue().equals(value))
             {
