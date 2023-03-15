@@ -12,7 +12,7 @@ import javax.swing.table.AbstractTableModel;
 import main.configures.ApplicationCfg;
 import main.domain.AuditType;
 import main.domain.Renter;
-import main.infra.IRenterQueryRepository;
+import main.infra.IAuditRepository;
 import main.infra.impl.RenterQueryRepository;
 import main.model.RenterModel;
 import main.services.IRenterService;
@@ -25,11 +25,11 @@ public class RenterService implements IRenterService
     public RenterModel findRenterById(Connection con, Integer id)
     {
         RenterModel renterModel = (RenterModel) objectMap.get(AuditType.RENTER);
-        IRenterQueryRepository renterQueryRepository = new RenterQueryRepository();
+        IAuditRepository renterQueryRepository = new RenterQueryRepository();
 
         try
         {
-            Renter renter = renterQueryRepository.findRenterById(con, id);
+            Renter renter = renterQueryRepository.findById(con, id);
             renterModel.setRenterList(Arrays.asList(renter));
         }
         catch (SQLException e)
@@ -43,11 +43,11 @@ public class RenterService implements IRenterService
     public boolean removeRenterById(Connection con, Integer id)
     {
         boolean result = false;
-        IRenterQueryRepository renterQueryRepository = new RenterQueryRepository();
+        IAuditRepository renterQueryRepository = new RenterQueryRepository();
 
         try
         {
-            result = renterQueryRepository.removeRenterById(con, id);
+            result = renterQueryRepository.removeById(con, id);
         }
         catch (SQLException e)
         {
@@ -56,16 +56,17 @@ public class RenterService implements IRenterService
         return result;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public RenterModel findAllRenters(Connection con)
     {
         RenterModel renterModel = (RenterModel) objectMap.get(AuditType.RENTER);
         List<Renter> list = new ArrayList<>();
-        IRenterQueryRepository renterQueryRepository = new RenterQueryRepository();
+        IAuditRepository renterQueryRepository = new RenterQueryRepository();
 
         try
         {
-            list.addAll(renterQueryRepository.findAllRenters(con));
+            list.addAll((List<Renter>) renterQueryRepository.findAll(con));
             renterModel.setRenterList(list);
         }
         catch (SQLException e)
@@ -79,11 +80,11 @@ public class RenterService implements IRenterService
     public boolean createRenter(Connection con, String name, String email, String phoneNumber)
     {
         boolean result = false;
-        IRenterQueryRepository renterQueryRepository = new RenterQueryRepository();
+        IAuditRepository renterQueryRepository = new RenterQueryRepository();
 
         try
         {
-            result = renterQueryRepository.createRenter(con, name, email, phoneNumber);
+            result = renterQueryRepository.create(con, name, email, phoneNumber);
         }
         catch (SQLException e)
         {
@@ -97,11 +98,11 @@ public class RenterService implements IRenterService
     public boolean updateRenterById(Connection con, Integer id, String name, String email, String phoneNumber)
     {
         boolean result = false;
-        IRenterQueryRepository renterQueryRepository = new RenterQueryRepository();
+        IAuditRepository renterQueryRepository = new RenterQueryRepository();
 
         try
         {
-            result = renterQueryRepository.updateRenterById(con, id, name, email, phoneNumber);
+            result = renterQueryRepository.updateById(con, id, name, email, phoneNumber);
         }
         catch (SQLException e)
         {

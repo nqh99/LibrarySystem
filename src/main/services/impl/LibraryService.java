@@ -12,7 +12,7 @@ import javax.swing.table.AbstractTableModel;
 import main.configures.ApplicationCfg;
 import main.domain.AuditType;
 import main.domain.Library;
-import main.infra.ILibraryQueryRepository;
+import main.infra.IAuditRepository;
 import main.infra.impl.LibraryQueryRepository;
 import main.model.LibraryModel;
 import main.services.ILibraryService;
@@ -26,11 +26,11 @@ public class LibraryService implements ILibraryService
     public LibraryModel findLibraryById(Connection con, Integer id)
     {
         LibraryModel libraryModel = (LibraryModel) objectMap.get(AuditType.LIBRARY);
-        ILibraryQueryRepository libraryQueryRepository = new LibraryQueryRepository();
+        IAuditRepository libraryQueryRepository = new LibraryQueryRepository();
 
         try
         {
-            Library library = libraryQueryRepository.findLibraryById(con, id);
+            Library library = libraryQueryRepository.findById(con, id);
             libraryModel.setLibraryList(Arrays.asList(library));
         }
         catch (SQLException e)
@@ -41,15 +41,16 @@ public class LibraryService implements ILibraryService
         return libraryModel;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public LibraryModel findAllLibrary(Connection con)
     {
         LibraryModel libraryModel = (LibraryModel) objectMap.get(AuditType.LIBRARY);
-        ILibraryQueryRepository libraryQueryRepository = new LibraryQueryRepository();
+        IAuditRepository libraryQueryRepository = new LibraryQueryRepository();
         List<Library> list = new ArrayList<>();
         try
         {
-            list.addAll(libraryQueryRepository.findAllLibraries(con));
+            list.addAll((List<Library>) libraryQueryRepository.findAll(con));
             libraryModel.setLibraryList(list);
         }
         catch (SQLException e)
@@ -62,11 +63,11 @@ public class LibraryService implements ILibraryService
     @Override
     public boolean removeLibraryById(Connection con, Integer id)
     {
-        ILibraryQueryRepository libraryQueryRepository = new LibraryQueryRepository();
+        IAuditRepository libraryQueryRepository = new LibraryQueryRepository();
         boolean result = false;
         try
         {
-            result = libraryQueryRepository.removeLibraryById(con, id);
+            result = libraryQueryRepository.removeById(con, id);
         }
         catch (SQLException e)
         {
@@ -78,12 +79,12 @@ public class LibraryService implements ILibraryService
     @Override
     public boolean createLibrary(Connection con, String name, String location)
     {
-        ILibraryQueryRepository libraryQueryRepository = new LibraryQueryRepository();
+        IAuditRepository libraryQueryRepository = new LibraryQueryRepository();
         boolean result = false;
 
         try
         {
-            result = libraryQueryRepository.createLibrary(con, name, location);
+            result = libraryQueryRepository.create(con, name, location);
         }
         catch (SQLException e)
         {
@@ -96,12 +97,12 @@ public class LibraryService implements ILibraryService
     @Override
     public boolean updateLibraryById(Connection con, Integer id, String name, String location)
     {
-        ILibraryQueryRepository libraryQueryRepository = new LibraryQueryRepository();
+        IAuditRepository libraryQueryRepository = new LibraryQueryRepository();
         boolean result = false;
 
         try
         {
-            result = libraryQueryRepository.updateLibraryById(con, id, name, location);
+            result = libraryQueryRepository.updateById(con, id, name, location);
         }
         catch (SQLException e)
         {

@@ -95,6 +95,7 @@ public class HomePage extends JFrame
     private void initComponents()
     {
         // Title sectiongetValueAt
+
         tableNameLabel = new JLabel("Choose table: ");
         tableNameLabel.setFont(new Font("Tahoma", 0, 18));
 
@@ -112,7 +113,8 @@ public class HomePage extends JFrame
                     isSelectTable = true;
                     try
                     {
-                        con = DatabaseUtils.getConnection();
+                        DatabaseCfg databaseCfg = new DatabaseCfg();
+                        con = DatabaseUtils.getConnection(databaseCfg);
                         fetchData(con, selectedItem);
                         renderFields(selectedItem, tableModel);
                     }
@@ -425,11 +427,14 @@ public class HomePage extends JFrame
     {
         String seletedItem = String.valueOf(tableComboBox.getSelectedItem());
         boolean isDeleteSuccess = false;
+        DatabaseCfg databaseCfg = new DatabaseCfg();
         if (AuditType.BOOK.getValue().equals(seletedItem))
         {
             try
             {
-                con = DatabaseUtils.getConnection();
+
+                con = DatabaseUtils.getConnection(databaseCfg);
+                IBookService bookService = new BookService();
                 isDeleteSuccess = bookService.removeBookById(con, idOfRecord);
             }
             catch (SQLException e1)
@@ -441,7 +446,9 @@ public class HomePage extends JFrame
         {
             try
             {
-                con = DatabaseUtils.getConnection();
+
+                con = DatabaseUtils.getConnection(databaseCfg);
+                ILibraryService libraryService = new LibraryService();
                 isDeleteSuccess = libraryService.removeLibraryById(con, idOfRecord);
             }
             catch (SQLException e1)
@@ -453,7 +460,6 @@ public class HomePage extends JFrame
         {
             try
             {
-                DatabaseCfg databaseCfg = new DatabaseCfg();
                 IRenterService renterService = new RenterService();
                 con = DatabaseUtils.getConnection(databaseCfg);
                 isDeleteSuccess = renterService.removeRenterById(con, idOfRecord);
@@ -510,14 +516,17 @@ public class HomePage extends JFrame
     {
         if (AuditType.BOOK.getValue().equals(seletedItem))
         {
+            IBookService bookService = new BookService();
             tableModel = bookService.findAllBook(con);
         }
         else if (AuditType.LIBRARY.getValue().equals(seletedItem))
         {
+            ILibraryService libraryService = new LibraryService();
             tableModel = libraryService.findAllLibrary(con);
         }
         else if (AuditType.RENTER.getValue().equals(seletedItem))
         {
+            IRenterService renterService = new RenterService();
             tableModel = renterService.findAllRenters(con);
         }
         else

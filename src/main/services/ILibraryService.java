@@ -6,7 +6,6 @@ import main.model.LibraryModel;
 
 public interface ILibraryService
 {
-
     public LibraryModel findLibraryById(Connection con, Integer id);
 
     public LibraryModel findAllLibrary(Connection con);

@@ -15,6 +15,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import main.configures.ApplicationCfg;
+import main.configures.DatabaseCfg;
 import main.model.UserModel;
 import main.services.ILoginService;
 import main.services.impl.LoginService;
@@ -28,8 +29,6 @@ public class LoginPage extends JFrame
     private final ApplicationCfg applicationCfg   = ApplicationCfg.getInstance();
 
     private Connection           con;
-
-    private final ILoginService  loginService     = LoginService.getInstance();
 
     private JTextField           username;
 
@@ -60,7 +59,9 @@ public class LoginPage extends JFrame
             {
                 try
                 {
-                    con = DatabaseUtils.getConnection();
+                    DatabaseCfg databaseCfg = new DatabaseCfg();
+                    con = DatabaseUtils.getConnection(databaseCfg);
+                    ILoginService loginService = new LoginService();
                     UserModel user = loginService.findUserByUsernameAndPassword(con, username.getText(), new String(password.getPassword()));
                     if (user.isAuthen())
                     {

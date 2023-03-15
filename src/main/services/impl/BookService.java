@@ -12,7 +12,7 @@ import javax.swing.table.AbstractTableModel;
 import main.configures.ApplicationCfg;
 import main.domain.AuditType;
 import main.domain.Book;
-import main.infra.IBookQueryRepository;
+import main.infra.IAuditRepository;
 import main.infra.impl.BookQueryRepository;
 import main.model.BookModel;
 import main.services.IBookService;
@@ -26,11 +26,11 @@ public class BookService implements IBookService
     public BookModel findBookById(Connection con, Integer id)
     {
         BookModel bookModel = (BookModel) objectMap.get(AuditType.BOOK);
-        IBookQueryRepository bookQueryRepository = new BookQueryRepository();
+        IAuditRepository bookQueryRepository = new BookQueryRepository();
 
         try
         {
-            Book book = bookQueryRepository.findBookById(con, id);
+            Book book = bookQueryRepository.findById(con, id);
             bookModel.setBookList(Arrays.asList(book));
         }
         catch (SQLException e)
@@ -40,16 +40,17 @@ public class BookService implements IBookService
         return bookModel;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public BookModel findAllBook(Connection con)
     {
         BookModel bookModel = (BookModel) objectMap.get(AuditType.BOOK);
-        IBookQueryRepository bookQueryRepository = new BookQueryRepository();
+        IAuditRepository bookQueryRepository = new BookQueryRepository();
         List<Book> list = new ArrayList<>();
         try
         {
 
-            list.addAll(bookQueryRepository.findAllBook(con));
+            list.addAll((List<Book>) bookQueryRepository.findAll(con));
             bookModel.setBookList(list);
         }
         catch (SQLException e)
@@ -63,10 +64,10 @@ public class BookService implements IBookService
     public boolean removeBookById(Connection con, Integer id)
     {
         boolean result = false;
-        IBookQueryRepository bookQueryRepository = new BookQueryRepository();
+        IAuditRepository bookQueryRepository = new BookQueryRepository();
         try
         {
-            result = bookQueryRepository.removeBookById(con, id);
+            result = bookQueryRepository.removeById(con, id);
         }
         catch (SQLException e)
         {
@@ -79,10 +80,10 @@ public class BookService implements IBookService
     public boolean updateBookById(Connection con, Integer id, String name, String author)
     {
         boolean result = false;
-        IBookQueryRepository bookQueryRepository = new BookQueryRepository();
+        IAuditRepository bookQueryRepository = new BookQueryRepository();
         try
         {
-            result = bookQueryRepository.updateBookById(con, id, name, author);
+            result = bookQueryRepository.updateById(con, id, name, author);
         }
         catch (SQLException e)
         {
@@ -96,11 +97,11 @@ public class BookService implements IBookService
     {
         boolean result = false;
 
-        IBookQueryRepository bookQueryRepository = new BookQueryRepository();
+        IAuditRepository bookQueryRepository = new BookQueryRepository();
 
         try
         {
-            result = bookQueryRepository.createBook(con, name, author);
+            result = bookQueryRepository.create(con, name, author);
         }
         catch (SQLException e)
         {

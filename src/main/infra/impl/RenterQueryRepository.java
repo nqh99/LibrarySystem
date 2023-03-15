@@ -12,7 +12,7 @@ import java.util.List;
 import database.SqlQuery;
 import main.domain.Audit;
 import main.domain.Renter;
-import main.infra.IRenterQueryRepository;
+import main.infra.IAuditRepository;
 
 /**
  * Singleton
@@ -20,11 +20,11 @@ import main.infra.IRenterQueryRepository;
  * @author ttl
  *
  */
-public class RenterQueryRepository implements IRenterQueryRepository
+public class RenterQueryRepository implements IAuditRepository
 {
-
+    @SuppressWarnings("unchecked")
     @Override
-    public Renter findRenterById(Connection con, Integer id) throws SQLException
+    public Renter findById(Connection con, Integer id) throws SQLException
     {
         Renter renter = null;
         Audit audit = null;
@@ -55,7 +55,7 @@ public class RenterQueryRepository implements IRenterQueryRepository
     }
 
     @Override
-    public List<Renter> findAllRenters(Connection con) throws SQLException
+    public List<?> findAll(Connection con) throws SQLException
     {
         List<Renter> list = new ArrayList<>();
         try (PreparedStatement stmt = con.prepareStatement(SqlQuery.ALL_RENTERS_SQL))
@@ -86,17 +86,17 @@ public class RenterQueryRepository implements IRenterQueryRepository
     }
 
     @Override
-    public boolean createRenter(Connection con, String name, String email, String phoneNumber) throws SQLException
+    public boolean create(Connection con, String... args) throws SQLException
     {
         boolean result = false;
-        try (PreparedStatement stmt = con.prepareStatement(SqlQuery.INSERT_BOOK))
+        try (PreparedStatement stmt = con.prepareStatement(SqlQuery.INSERT_RENTER))
         {
             Long createTime = new Date().getTime();
-            stmt.setString(1, name);
-            stmt.setString(2, email);
-            stmt.setString(3, phoneNumber);
+            stmt.setString(1, args[0]);
+            stmt.setString(2, args[1]);
+            stmt.setString(3, args[2]);
             stmt.setLong(4, createTime);
-            stmt.setNull(5, Types.NULL);
+            stmt.setNull(5, Types.LONGVARBINARY);
 
             int row = stmt.executeUpdate();
             if (row > 0)
@@ -112,12 +112,17 @@ public class RenterQueryRepository implements IRenterQueryRepository
     }
 
     @Override
-    public boolean removeRenterById(Connection con, Integer id) throws SQLException
+    public boolean updateById(Connection con, Integer id, String... args) throws SQLException
     {
         boolean result = false;
-        try (PreparedStatement stmt = con.prepareStatement(SqlQuery.DELETE_RENTER_BY_ID))
+        try (PreparedStatement stmt = con.prepareStatement(SqlQuery.UPDATE_RENTER_BY_ID))
         {
-            stmt.setInt(1, id);
+            Long updateTime = new Date().getTime();
+            stmt.setString(1, args[0]);
+            stmt.setString(2, args[1]);
+            stmt.setString(3, args[2]);
+            stmt.setLong(4, updateTime);
+            stmt.setInt(5, id);
             int rows = stmt.executeUpdate();
             if (rows > 0)
             {
@@ -132,17 +137,12 @@ public class RenterQueryRepository implements IRenterQueryRepository
     }
 
     @Override
-    public boolean updateRenterById(Connection con, Integer id, String name, String email, String phoneNumber) throws SQLException
+    public boolean removeById(Connection con, Integer id) throws SQLException
     {
         boolean result = false;
-        try (PreparedStatement stmt = con.prepareStatement(SqlQuery.UPDATE_RENTER_BY_ID))
+        try (PreparedStatement stmt = con.prepareStatement(SqlQuery.DELETE_RENTER_BY_ID))
         {
-            Long updateTime = new Date().getTime();
-            stmt.setString(1, name);
-            stmt.setString(2, email);
-            stmt.setString(3, phoneNumber);
-            stmt.setLong(4, updateTime);
-            stmt.setInt(5, id);
+            stmt.setInt(1, id);
             int rows = stmt.executeUpdate();
             if (rows > 0)
             {

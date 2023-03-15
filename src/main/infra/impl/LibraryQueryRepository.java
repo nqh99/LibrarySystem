@@ -11,10 +11,8 @@ import java.util.List;
 
 import database.SqlQuery;
 import main.domain.Audit;
-import main.domain.Book;
 import main.domain.Library;
 import main.infra.IAuditRepository;
-import main.infra.ILibraryQueryRepository;
 
 /**
  * 
@@ -24,38 +22,9 @@ import main.infra.ILibraryQueryRepository;
 public class LibraryQueryRepository implements IAuditRepository
 {
 
+    @SuppressWarnings("unchecked")
     @Override
-    public Library findLibraryById(Connection con, Integer id) throws SQLException
-    {
-
-    }
-
-    @Override
-    public List<Library> findAllLibraries(Connection con) throws SQLException
-    {
-
-    }
-
-    @Override
-    public boolean createLibrary(Connection con, String name, String location) throws SQLException
-    {
-
-    }
-
-    @Override
-    public boolean removeLibraryById(Connection con, Integer id) throws SQLException
-    {
-
-    }
-
-    @Override
-    public boolean updateLibraryById(Connection con, Integer id, String name, String location) throws SQLException
-    {
-
-    }
-
-    @Override
-    public Book findById(Connection con, Integer id) throws SQLException
+    public Library findById(Connection con, Integer id) throws SQLException
     {
         Library library = null;
         Audit audit = null;
@@ -114,17 +83,17 @@ public class LibraryQueryRepository implements IAuditRepository
     }
 
     @Override
-    public boolean create(Connection con, String name, String author) throws SQLException
+    public boolean create(Connection con, String... args) throws SQLException
     {
         boolean result = false;
         try (PreparedStatement stmt = con.prepareStatement(SqlQuery.INSERT_LIBRARY))
         {
             Long createTime = new Date().getTime();
 
-            stmt.setString(1, name);
-            stmt.setString(2, author);
+            stmt.setString(1, args[0]);
+            stmt.setString(2, args[1]);
             stmt.setLong(3, createTime);
-            stmt.setNull(4, Types.NULL);
+            stmt.setNull(4, Types.LONGVARBINARY);
 
             int row = stmt.executeUpdate();
             if (row > 0)
@@ -140,14 +109,14 @@ public class LibraryQueryRepository implements IAuditRepository
     }
 
     @Override
-    public boolean updateById(Connection con, Integer id, String name, String author) throws SQLException
+    public boolean updateById(Connection con, Integer id, String... args) throws SQLException
     {
         boolean result = false;
         try (PreparedStatement stmt = con.prepareStatement(SqlQuery.UPDATE_LIBRARY_BY_ID))
         {
             Long updateTime = new Date().getTime();
-            stmt.setString(1, name);
-            stmt.setString(2, author);
+            stmt.setString(1, args[0]);
+            stmt.setString(2, args[1]);
             stmt.setLong(3, updateTime);
             stmt.setInt(4, id);
             int rows = stmt.executeUpdate();
